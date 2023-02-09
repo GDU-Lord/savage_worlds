@@ -1,0 +1,40 @@
+input:disabled, textarea:disabled
+    background-color: #e0fff7
+    
+@media (max-width: 800px) 
+    body
+        padding: 1vw
+        margin: 0
+        
+    .sheet
+        background-color: #e2e2e2
+        width: 96vw
+        border: 1vw solid black
+        border-radius: 3vw
+        font-family: Arial
+
+@media (min-width: 800px) 
+    body
+        padding: 5px
+        margin: 0
+        
+    .sheet
+        background-color: #e2e2e2
+        width: 2000px
+        display: grid
+        grid-template-columns: 1fr 1fr 1fr 1fr
+        // grid-template-rows: min-content
+        // grid-auto-flow: column
+        margin: auto
+        grid-gap: 10px
+        border: 5px solid black
+        border-radius: 15px
+        font-family: Arial
+        padding: 10px
+    
+    .sheet > div
+        display: inline-block
+        border: 3px solid #e59090
+        width: 480px
+        background-color: rgba(0,0,0,0.1)
+

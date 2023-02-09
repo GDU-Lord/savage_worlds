@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+      "module": "esnext",
+      "target": "esnext",
+      "preserveConstEnums": true,
+      "moduleResolution": "Node",
+      "allowSyntheticDefaultImports": true,
+      "sourceMap": false,
+      "outDir": "",
+    },
+    "include": [
+      "typescript/"
+    ],
+    "exclude": [
+      "node_modules/"
+    ]
+}
