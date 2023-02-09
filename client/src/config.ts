@@ -1,1 +1,1 @@
-export const SERVER_URL = "http://localhost:5000";
+export const SERVER_URL = `${window.location.protocol}//${window.location.hostname}:5000`;
