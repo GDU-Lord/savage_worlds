@@ -4,10 +4,11 @@ import { useNavigate } from "react-router-dom";
 import Page, { block } from "../../components/Page";
 import { SERVER_URL } from "../../config";
 import { actions, RootState } from "../../store/reducers";
-import { updateCharacter } from "../../character";
+import { character, updateCharacter } from "../../character";
 import { useEffect } from "react";
 import { campaign } from "../MasterTokenPage";
 import Clipboard from "../../components/Clipboard";
+import { socketRequest } from "../../scripts";
 
 export interface props {
 
@@ -79,17 +80,20 @@ export default function MasterPage (props: props) {
                     text: "Додати персонажа",
                     callback: async (inputs) => {
                         
-                        const res = await fetch(SERVER_URL + "/character/create", {
-                            body: JSON.stringify({
-                                master_token: state.token
-                            }),
-                            headers: { "Content-Type": "application/json" },
-                            method: "put"
-                        });
+                        // const res = await fetch(SERVER_URL + "/character/create", {
+                        //     body: JSON.stringify({
+                        //         master_token: state.token
+                        //     }),
+                        //     headers: { "Content-Type": "application/json" },
+                        //     method: "put"
+                        // });
 
-                        const character = await res.json();
+                        const {data, status} = await socketRequest<character>("character-create", state.token);
 
-                        window.open("/character?token=" + character.token);
+                        if(status !== 200)
+                            return alert("Помилка!");
+
+                        window.open("/character?token=" + data.token);
 
                         const r = await fetch(SERVER_URL + "/campaign/get?master_token=" + state.token);
                         const campaign = await r.json() as campaign;

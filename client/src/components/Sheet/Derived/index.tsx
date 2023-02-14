@@ -17,15 +17,15 @@ export default function Derived (props: props) {
         <div className={s.derived}>
             <Tab name="derived" title="Похідна статистика">
                 <div className={s.field}>
-                    <div className={s.field_title}>Захист: </div>
+                    <div className={s.field_title}>Захист:</div>
                     <div className={s.field_content}>{parry}</div>
                 </div>
                 <div className={s.field}>
-                    <div className={s.field_title}>Стійкість: </div>
+                    <div className={s.field_title}>Стійкість:</div>
                     <div className={s.field_content}>{toughness}({armor})</div>
                 </div>
                 <div className={s.field}>    
-                    <div className={s.field_title}>Навантаження: </div>
+                    <div className={s.field_title}>Навантаження:</div>
                     <div className={s.field_content}>{weight}/{maxWeight}</div>
                 </div>
             </Tab>

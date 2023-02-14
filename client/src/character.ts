@@ -154,6 +154,8 @@ export function updateCharacter (dispatch: any, state: RootState["sheet"], chara
 
     // character.textStatistics.token = character.token;
 
+    character.textStatistics.token = character.token;
+
     initTextStatistics(character.textStatistics);
     initOtherStatistics(character.otherStatistics);
 
@@ -234,6 +236,8 @@ export function characterSave (state: RootState["sheet"]) {
     const { attributes, other: otherStatistics, text: textStatistics, sheet: { savedData } } = state;
     const { token } = textStatistics;
 
+    console.log("TOKEN", token);
+
     const skills: skills = {} as skills;
 
     for(const id in state.skills)
@@ -272,7 +276,10 @@ export function characterSave (state: RootState["sheet"]) {
         weapons,
     };
 
+    
     const data = JSON.stringify(character);
+
+    console.log(character.token);
 
     if(data !== savedData)
         socket.emit("character-save", character);

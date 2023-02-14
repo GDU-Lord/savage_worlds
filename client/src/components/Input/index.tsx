@@ -26,13 +26,10 @@ export default function Input ({ disabled = false, big = false, placeholder = ""
 
     function resize (inp: HTMLInputElement | HTMLTextAreaElement) {
         if(!big) return;
-        const lines = inp.value.split("\n").length;
+        inp.style.height = "0px";
         const style = getComputedStyle(inp);
-        const fontSize = style.getPropertyValue("line-height");
-        if(fontSize.search("px") >= 0)
-            inp.style.height = (+fontSize.replace("px", "") * lines) + "px";
-        if(fontSize.search("vw") >= 0)
-            inp.style.height = (+fontSize.replace("vw", "") * lines) + "px";
+        const padding = +style.getPropertyValue("padding").replaceAll("vw", "").replaceAll("px", "");
+        inp.style.height = inp.scrollHeight - padding * 2 + 1 + "px";
     }
 
     function check (inp: HTMLInputElement | HTMLTextAreaElement) {

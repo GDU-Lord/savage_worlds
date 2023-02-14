@@ -92,9 +92,11 @@ export default function Weapon ({ id }: props) {
         toggleHiddenWeapon(id);
     }
 
+    const ap = w.ap === 0 ? "" : `[${w.ap}]`;
+
     return (
         <div className={s.weapon}>
-            <div onClick={updateHidden} className={s.title}>{w.name.toString()} {getDamage(w.damage)}</div>
+            <div onClick={updateHidden} className={s.title}>{w.name.toString()} {getDamage(w.damage)} {ap}</div>
             {!w.hidden && <><div className={s.container}>
                 <div className={s.subtitle}>Назва</div>
                 <Input
@@ -119,22 +121,6 @@ export default function Weapon ({ id }: props) {
                     onUpdate={val => update("ap", val)}
                     disabled={state.sheet.locked}
                 />
-                <div className={s.subtitle}>Ціна</div>
-                <Input
-                    placeholder="Ціна"
-                    value={w.price.toString()}
-                    validate={validate}
-                    onUpdate={val => update("price", val)}
-                    disabled={state.sheet.locked}
-                />
-                <div className={s.subtitle}>Вага</div>
-                <Input
-                    placeholder="Вага"
-                    value={w.weight.toString()}
-                    validate={validate}
-                    onUpdate={val => update("weight", val)}
-                    disabled={state.sheet.locked}
-                />
                 <div className={s.subtitle}>Дистанція</div>
                 <Input
                     placeholder="Дистанція"
@@ -157,6 +143,22 @@ export default function Weapon ({ id }: props) {
                     value={w.minStrength.toString()}
                     validate={validate}
                     onUpdate={val => update("minStrength", val)}
+                    disabled={state.sheet.locked}
+                />
+                <div className={s.subtitle}>Ціна</div>
+                <Input
+                    placeholder="Ціна"
+                    value={w.price.toString()}
+                    validate={validate}
+                    onUpdate={val => update("price", val)}
+                    disabled={state.sheet.locked}
+                />
+                <div className={s.subtitle}>Вага</div>
+                <Input
+                    placeholder="Вага"
+                    value={w.weight.toString()}
+                    validate={validate}
+                    onUpdate={val => update("weight", val)}
                     disabled={state.sheet.locked}
                 />
                 <div className={s.subtitle}>Додатково</div>

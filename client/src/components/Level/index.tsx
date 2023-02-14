@@ -103,8 +103,8 @@ export default function Level ({ type, name, core = false, always_active = false
                 onUpdate={setModifier}
                 disabled={locked}
             />
-            <button onClick={e => adjust(e, -1)} className={s.adjust} disabled={locked}>-</button>
-            <button onClick={e => adjust(e, 1)} className={s.adjust} disabled={locked}>+</button>
+            <button onClick={e => adjust(e, -1)} className={s.adjust+" "+s.minus} disabled={locked}>-</button>
+            <button onClick={e => adjust(e, 1)} className={s.adjust+" "+s.plus} disabled={locked}>+</button>
         </div>
     );
 

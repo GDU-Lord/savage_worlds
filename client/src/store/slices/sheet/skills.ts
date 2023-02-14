@@ -108,6 +108,8 @@ const slice = createSlice({
         initSkills (state, { payload: skills } : {payload: {
             [key: string]: [number, number];
         }}) {
+
+            const newState = {} as state;
             
             for(const id in skills) {
                 let skill = state[id];
@@ -120,8 +122,10 @@ const slice = createSlice({
                         core: false
                     } as skill;
                 if(skill == null) continue;
-                state[id] = new Skill(skill.name, skills[id] as level, skill.id, skill.attribute as attribute, skill.core);
+                newState[id] = new Skill(skill.name, skills[id] as level, skill.id, skill.attribute as attribute, skill.core);
             }
+
+            return newState;
 
         },
         addCustomSkill (state, { payload: id }: { payload: string }) {

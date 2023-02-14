@@ -1,5 +1,6 @@
 import {Server as HTTPServer} from "http";
 import { Socket, Server } from "socket.io";
+import Campaign from "./campaign.js";
 import Character, { character } from "./character.js";
 import { CLIENT_ADDRESS } from "./config.js"
 
@@ -46,6 +47,11 @@ class User {
 
 }
 
+interface SocketData {
+    data: any;
+    status: 200 | 500 | 400 | 404;
+}
+
 export function createSocket (server: HTTPServer, listener: (user: User) => void = () => {}) {
 
     const io = new Server(server, {
@@ -82,17 +88,40 @@ export function sockets (user: User) {
 
     });
 
+    socket.on("character-create", async (token: string) => {
+
+        const campaign = await Campaign.get(token);
+        const tag = "character-create";
+
+        const res = (status: SocketData["status"], data: SocketData["data"]) => socket.emit(tag, { data, status });
+
+        if(campaign === undefined)
+            return res(500, null);
+        if(campaign === null)
+            return res(400, null);
+
+        const character = await Character.create(campaign._id);
+
+        if(character == null)
+            return res(500, null);
+            
+        res(200, character);
+    });
+
     socket.on("character-save", async (character: character) => {
 
         const data = await Character.update(character);
         let status = 200;
+        const tag = "character-save";
+
+        const res = (status: SocketData["status"], data: SocketData["data"]) => socket.emit(tag, { data, status });
 
         if(data === undefined)
-            status = 500;
+            return res(500, null);
         if(data === null)
-            status = 400;
+            return res(400, null);
         
-        socket.emit("character-save", { status });
+        socket.emit("character-save", { status, data: null });
 
         if(status !== 200)
             return;

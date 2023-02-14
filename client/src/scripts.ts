@@ -11,10 +11,10 @@ export function ObjectId () {
 
 export const socket = io(SERVER_URL);
 
-export interface SocketData {
+export interface SocketData<Type=any> {
     tag?: string;
     status: 200 | 404 | 500;
-    data: any;
+    data: Type;
 }
 
 class SocketPromise {
@@ -26,7 +26,7 @@ class SocketPromise {
     }
 }
 
-class Tag {
+class Tag<Type=any> {
 
     static list: { [tag: string]: Tag } = {};
 
@@ -47,7 +47,7 @@ class Tag {
 
     get (data: void) {
         socket.emit(this.tag, data);
-        return new Promise<SocketData>(res => {
+        return new Promise<SocketData<Type>>(res => {
             const p = new SocketPromise(res);
             this.promises[p.id] = p;
         });
@@ -55,9 +55,9 @@ class Tag {
 
 }
 
-export async function socketRequest (tagName: string, data: any) {
+export async function socketRequest<Type=any> (tagName: string, data: any) {
     const tag = Tag.list[tagName] ?? new Tag(tagName);
-    return await tag.get(data);
+    return await tag.get(data) as SocketData<Type>;
 }
 
 export type Mutable<Type> = {
