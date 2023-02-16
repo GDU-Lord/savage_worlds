@@ -33,7 +33,7 @@ export default function MasterTokenPage (props: props) {
                 {
                     text: "Підтвердити",
                     async callback (inputs) {
-                        const token = "294550202";//inputs[0].value;
+                        const token = inputs[0].value;
                         const res = await fetch(SERVER_URL + "/campaign/get?master_token=" + token);
                         if(res.status !== 200) return;
                         const campaign = await res.json() as campaign;
