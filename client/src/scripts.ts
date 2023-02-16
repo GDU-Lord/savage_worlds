@@ -68,3 +68,7 @@ export type Mutable<Type> = {
 export function CopyObject<Type> (obj: Type) {
     return JSON.parse(JSON.stringify(obj)) as Type;
 }
+
+export function isMobile () {
+    return window.innerWidth <= 800;
+}

@@ -30,6 +30,8 @@ export default function Sheet (props: props) {
         sendData(state);
     }, [state]);
 
+    document.head.querySelector("title")!.innerText = state.text.name.trim() === "" ? "Персонаж" : state.text.name;
+
     return (
         <div className={s.sheet}>
             <TextStats/>

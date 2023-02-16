@@ -11,7 +11,7 @@ export interface state {
 };
 
 const slice = createSlice({
-    name: "master",
+    name: "campaign",
     initialState: {
         token: "",
         characters: []
@@ -34,4 +34,4 @@ const slice = createSlice({
 });
 
 export default slice.reducer;
-export const masterActions = slice.actions;
+export const campaignActions = slice.actions;

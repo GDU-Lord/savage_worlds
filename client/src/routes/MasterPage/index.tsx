@@ -8,7 +8,9 @@ import { character, updateCharacter } from "../../character";
 import { useEffect } from "react";
 import { campaign } from "../MasterTokenPage";
 import Clipboard from "../../components/Clipboard";
-import { socketRequest } from "../../scripts";
+import { isMobile, socketRequest } from "../../scripts";
+import s from "./index.module.sass";
+import Board from "../../components/Board";
 
 export interface props {
 
@@ -16,7 +18,7 @@ export interface props {
 
 export default function MasterPage (props: props) {
 
-    const state = useSelector((state: RootState) => state.master);
+    const state = useSelector((state: RootState) => state.master.campaign);
     const nav = useNavigate();
 
     useEffect(() => {
@@ -26,13 +28,16 @@ export default function MasterPage (props: props) {
 
     const dispatch = useDispatch();
 
-    const { updateCharacters, updateToken } = bindActionCreators(actions, dispatch);
+    const { updateCharacters, updateToken, addWindow } = bindActionCreators(actions, dispatch);
 
     const characters: block["buttons"] = state.characters.map(({ name, token }) => ({
         text: name === "" ? "---" : name,
         callback: async () => {
 
-            window.open("/character?token=" + token);
+            if(isMobile())
+                window.open("/character?token=" + token);
+            else
+                addWindow("/character?token=" + token);
 
         }
     }));
@@ -80,20 +85,15 @@ export default function MasterPage (props: props) {
                     text: "Додати персонажа",
                     callback: async (inputs) => {
                         
-                        // const res = await fetch(SERVER_URL + "/character/create", {
-                        //     body: JSON.stringify({
-                        //         master_token: state.token
-                        //     }),
-                        //     headers: { "Content-Type": "application/json" },
-                        //     method: "put"
-                        // });
-
                         const {data, status} = await socketRequest<character>("character-create", state.token);
 
                         if(status !== 200)
                             return alert("Помилка!");
 
-                        window.open("/character?token=" + data.token);
+                        if(isMobile())
+                            window.open("/character?token=" + data.token);
+                        else
+                            addWindow("/character?token=" + data.token);
 
                         const r = await fetch(SERVER_URL + "/campaign/get?master_token=" + state.token);
                         const campaign = await r.json() as campaign;
@@ -142,8 +142,9 @@ export default function MasterPage (props: props) {
         }
     ];
 
-    return (
+    return (<div className={s.main}>
         <Page blocks={blocks}/>
-    );
+        <Board/>
+    </div>);
 
 }
