@@ -50,10 +50,10 @@ export default function ArmorList (props: props) {
 
     return (
         <div className={s.armor_list}>
-            <Tab name="armor" title="Броня">
+            {(list.length > 0 || !state.sheet.locked) && <Tab name="armor" title="Броня">
                 {list}
                 {!state.sheet.locked && <button className={s.add} onClick={add} disabled={state.sheet.locked}>+</button>}
-            </Tab>
+            </Tab>}
         </div>
     );
 

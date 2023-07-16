@@ -51,10 +51,10 @@ export default function WeaponList (props: props) {
 
     return (
         <div className={s.weapons_list}>
-            <Tab name="weapons" title="Зброя">
+            {(list.length > 0 || !state.sheet.locked) && <Tab name="weapons" title="Зброя">
                 {list}
                 {!state.sheet.locked && <button className={s.add} onClick={add} disabled={state.sheet.locked}>+</button>}
-            </Tab>
+            </Tab>}
         </div>
     );
 

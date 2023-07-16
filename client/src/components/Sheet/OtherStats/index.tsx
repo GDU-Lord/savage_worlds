@@ -13,10 +13,10 @@ export default function OtherStats (props: props) {
 
     const state = useSelector((state: RootState) => state.sheet);
 
-    const stats: (keyof otherState)[] = ["attributePoints", "skillPoints", "bonusPoints", "speed", "weightAmplifier", "money", "wounds", "fatigue", "bennies"];
-    const names = ["Бали атрибутів", "Бали вмінь", "Бонусні бали", "Швидкість", "Множник ваги", "Гроші", "Рани", "Втома", "Бені"];
-    const always_visible = [false, false, false, true, false, true, true, true, true];
-    const always_active = [false, false, false, false, false, false, true, true, true];
+    const stats: (keyof otherState)[] = ["attributePoints", "skillPoints", "bonusPoints", "extraSpend", "size", "speed", "weightAmplifier", "money", "wounds", "fatigue", "bennies"];
+    const names = ["Бали атрибутів", "Бали вмінь", "Бонусні бали", "Додаткові витрати", "Розмір", "Швидкість", "Множник ваги", "Гроші", "Рани", "Втома", "Бені"];
+    const always_visible = [false, false, false, false, true, true, false, true, true, true, true];
+    const always_active = [false, false, false, false, false, false, false, false, true, true, true];
 
     const list = stats.map((stat, index) => {
 
