@@ -63,6 +63,8 @@ export interface otherStatistics {
     attributePoints: number;
     skillPoints: number;
     bonusPoints: number;
+    extraSpend: number;
+    size: number;
     weightAmplifier: number;
     money: number;
     wounds: number;
@@ -99,6 +101,17 @@ export interface armor {
     torso: boolean;
     arms: boolean;
     legs: boolean;
+    worn: boolean;
+    name: string;
+    id: string;
+};
+
+export interface shield {
+    bonus: number;
+    cover: number;
+    price: number;
+    weight: number;
+    minStrength: number;
     worn: boolean;
     name: string;
     id: string;
@@ -282,6 +295,7 @@ export default class Character implements character {
     hindrances: hindrance[];
     tools: tool[];
     armor: armor[];
+    shields: shield[];
     weapons: weapon[];
 
     constructor (campaign_id: ObjectId) {
@@ -302,6 +316,8 @@ export default class Character implements character {
             attributePoints: 5,
             skillPoints: 12,
             bonusPoints: 0,
+            extraSpend: 0,
+            size: 0,
             weightAmplifier: 5,
             money: 500,
             wounds: 0,
@@ -317,6 +333,7 @@ export default class Character implements character {
         this.hindrances = [];
         this.tools = [];
         this.armor = [];
+        this.shields = [];
         this.weapons = [];
 
     }

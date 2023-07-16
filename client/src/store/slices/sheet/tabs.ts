@@ -15,6 +15,7 @@ export interface state {
     hindrances: boolean;
     tools: boolean;
     armor: boolean;
+    shields: boolean;
     weapons: boolean;
 };
 
@@ -30,6 +31,7 @@ const slice = createSlice({
         hindrances: true,
         tools: true,
         armor: true,
+        shields: true,
         weapons: true
     } as state,
     reducers: {

@@ -41,10 +41,10 @@ export default function ToolsList (props: props) {
 
     return (
         <div className={s.tools_list}>
-            <Tab name="tools" title="Ресурси та інструменти">
+            {(list.length > 0 || !state.sheet.locked) && <Tab name="tools" title="Ресурси та інструменти">
                 {list}
                 {!state.sheet.locked && <button className={s.add} onClick={add} disabled={state.sheet.locked}>+</button>}
-            </Tab>
+            </Tab>}
         </div>
     );
 

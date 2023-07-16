@@ -11,7 +11,7 @@ export default function Derived (props: props) {
 
     const state = useSelector((state: RootState) => state.sheet);
 
-    const { parry, toughness, armor, weight, maxWeight } = state.derived;
+    const { parry, toughness, armor, weight, maxWeight, totalPoints, maxPoints } = state.derived;
 
     return (
         <div className={s.derived}>
@@ -28,6 +28,12 @@ export default function Derived (props: props) {
                     <div className={s.field_title}>Навантаження:</div>
                     <div className={s.field_content}>{weight}/{maxWeight}</div>
                 </div>
+                {state.sheet.locked ||
+                    <div className={s.field}>    
+                        <div className={s.field_title}>Прокачка:</div>
+                        <div className={s.field_content}>{totalPoints}/{maxPoints}</div>
+                    </div>
+                }
             </Tab>
         </div>
     );

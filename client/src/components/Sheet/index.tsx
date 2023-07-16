@@ -14,6 +14,7 @@ import { actions, RootState } from "../../store/reducers";
 import { characterSave } from "../../character";
 import { bindActionCreators } from "@reduxjs/toolkit";
 import { useEffect } from "react";
+import ShieldsList from "./ShieldsList";
 
 export interface props {
 
@@ -40,6 +41,7 @@ export default function Sheet (props: props) {
             <HindrancesList/>
             <OtherStats/>
             <ArmorList/>
+            <ShieldsList/>
             <WeaponList/>
             <ToolsList/>
             <Attributes/>

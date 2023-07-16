@@ -10,6 +10,8 @@ export interface state {
     attributePoints: number;
     skillPoints: number;
     bonusPoints: number;
+    extraSpend: number;
+    size: number;
     weightAmplifier: number;
     money: number;
     wounds: number;
@@ -17,19 +19,23 @@ export interface state {
     bennies: number;
 };
 
+const initialState: state = {
+    speed: 6,
+    attributePoints: 5,
+    skillPoints: 12,
+    bonusPoints: 0,
+    extraSpend: 0,
+    size: 0,
+    weightAmplifier: 5,
+    money: 500,
+    wounds: 0,
+    fatigue: 0,
+    bennies: 3
+};
+
 const slice = createSlice({
     name: "other",
-    initialState: {
-        speed: 6,
-        attributePoints: 5,
-        skillPoints: 12,
-        bonusPoints: 0,
-        weightAmplifier: 5,
-        money: 500,
-        wounds: 0,
-        fatigue: 0,
-        bennies: 3
-    } as state,
+    initialState,
     reducers: {
         setOtherStatistic(state, { payload: {value, name} }: {payload: payload}) {
 
@@ -37,7 +43,9 @@ const slice = createSlice({
 
         },
         initOtherStatistics (state, { payload } : {payload: state}) {
-            return payload;
+            let i: keyof state;
+            for(i in payload)
+                state[i] = payload[i] ?? initialState[i];
         }
     }
 });

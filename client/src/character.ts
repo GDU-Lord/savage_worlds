@@ -1,9 +1,9 @@
-import { AnyAction, bindActionCreators } from "@reduxjs/toolkit";
-import { SERVER_URL } from "./config";
+import { bindActionCreators } from "@reduxjs/toolkit";
 import { actions, RootState } from "./store/reducers";
 import { state as toolsState } from "./store/slices/sheet/tools";
 import { state as weaponsState } from "./store/slices/sheet/weapons";
 import { state as armorState } from "./store/slices/sheet/armor";
+import { state as shieldsState } from "./store/slices/sheet/shields";
 import { state as edgesState } from "./store/slices/sheet/edges";
 import { state as hindrancesState } from "./store/slices/sheet/hindrances";
 import { socket } from "./scripts";
@@ -57,6 +57,8 @@ export interface otherStatistics {
     attributePoints: number;
     skillPoints: number;
     bonusPoints: number;
+    extraSpend: number;
+    size: number;
     weightAmplifier: number;
     money: number;
     wounds: number;
@@ -99,6 +101,17 @@ export interface armor {
     id: string;
 };
 
+export interface shield {
+    bonus: number;
+    cover: number;
+    price: number;
+    weight: number;
+    minStrength: number;
+    worn: boolean;
+    name: string;
+    id: string;
+};
+
 export interface weapon {
     id: string;
     name: string;
@@ -124,6 +137,7 @@ export interface character {
     hindrances: hindrance[];
     tools: tool[];
     armor: armor[];
+    shields: shield[];
     weapons: weapon[];
 }
 
@@ -135,6 +149,7 @@ export function updateCharacter (dispatch: any, state: RootState["sheet"], chara
         initTextStatistics,
         initTools,
         initArmor,
+        initShield,
         initEdges,
         initHindrances,
         initWeapons,
@@ -201,6 +216,20 @@ export function updateCharacter (dispatch: any, state: RootState["sheet"], chara
 
     initArmor(armor);
 
+    const shields: shieldsState = {
+        list: {
+            byId: {},
+            allIds: character.shields.map(armor => armor.id)
+        }
+    };
+
+    for(const shield of character.shields) {
+        shields.list.byId[shield.id] = shield as shieldsState["list"]["byId"][0];
+        shields.list.byId[shield.id].hidden = state.armor.list.byId[shield.id]?.hidden ?? true;
+    }
+
+    initShield(shields);
+
     const edges: edgesState = {
         list: {
             byId: {},
@@ -236,8 +265,6 @@ export function characterSave (state: RootState["sheet"]) {
     const { attributes, other: otherStatistics, text: textStatistics, sheet: { savedData } } = state;
     const { token } = textStatistics;
 
-    console.log("TOKEN", token);
-
     const skills: skills = {} as skills;
 
     for(const id in state.skills)
@@ -259,6 +286,10 @@ export function characterSave (state: RootState["sheet"]) {
         return state.armor.list.byId[id];
     }) as armor[];
 
+    const shields = state.shields.list.allIds.map(id => {
+        return state.shields.list.byId[id];
+    }) as shield[];
+
     const weapons = state.weapons.list.allIds.map(id => {
         return state.weapons.list.byId[id];
     }) as weapon[];
@@ -273,6 +304,7 @@ export function characterSave (state: RootState["sheet"]) {
         hindrances,
         tools,
         armor,
+        shields,
         weapons,
     };
 
