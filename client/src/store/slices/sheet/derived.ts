@@ -52,10 +52,14 @@ const slice = createSlice({
 
             // derived stats
 
+
+            // shields
+
             let shieldBonus = 0;
 
             for(const id of shields.list.allIds) {
                 const shield = shields.list.byId[id];
+                if(!shield.worn) continue;
                 shieldBonus += shield.bonus;
             }
 

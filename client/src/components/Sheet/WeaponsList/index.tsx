@@ -6,6 +6,7 @@ import { Weapon as WeaponClass } from "../../../store/slices/sheet/weapons";
 import Weapon from "./Weapon";
 import s from "./index.module.sass";
 import Tab from "../Tab";
+import { word } from "../../Language/language";
 
 export interface props {
 
@@ -51,7 +52,7 @@ export default function WeaponList (props: props) {
 
     return (
         <div className={s.weapons_list}>
-            {(list.length > 0 || !state.sheet.locked) && <Tab name="weapons" title="Зброя">
+            {(list.length > 0 || !state.sheet.locked) && <Tab name="weapons" title={word("weapons")}>
                 {list}
                 {!state.sheet.locked && <button className={s.add} onClick={add} disabled={state.sheet.locked}>+</button>}
             </Tab>}

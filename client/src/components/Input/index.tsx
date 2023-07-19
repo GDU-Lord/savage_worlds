@@ -40,9 +40,43 @@ export default function Input ({ disabled = false, big = false, placeholder = ""
     }
 
     function blur (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        
         isFocused = false;
+
+        const regex = /^[1-9][0-9]{0,}(\*|\/|\+|\-|\^)[1-9][0-9]{0,}$/g;
+
+        let val = e.target.value;
+
+        if(val.search(regex) > -1) {
+            if(val.includes("*")) {
+                const num = val.split("*").map(val => +val);
+                val = String(num[0] * num[1]);
+            }
+            else if(val.includes("-")) {
+                const num = val.split("-").map(val => +val);
+                val = String(num[0] - num[1]);
+            }
+            else if(val.includes("+")) {
+                const num = val.split("+").map(val => +val);
+                val = String(num[0] + num[1]);
+            }
+            else if(val.includes("/")) {
+                const num = val.split("/").map(val => +val);
+                val = String(num[0] / num[1]);
+            }
+            else if(val.includes("^")) {
+                const num = val.split("^").map(val => +val);
+                val = String(num[0] ** num[1]);
+            }
+        }
+
+        e.target.value = val;
+
+        check(e.target);
+
         if(!e.target.classList.contains(s.red))
             onUpdate(e.target.value);
+        
     }
 
     function focus (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) {

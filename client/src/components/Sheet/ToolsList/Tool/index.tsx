@@ -6,6 +6,7 @@ import s from "./index.module.sass";
 import { bindActionCreators } from "@reduxjs/toolkit";
 import Level from "../../../Level";
 import { useEffect } from "react";
+import { word } from "../../../Language/language";
 
 export interface props {
     id: string;
@@ -56,34 +57,45 @@ export default function Tool ({ id }: props) {
         saveData();
     }
 
+    let amountText = "";
+    
+    if(t.amount !== 1)
+        amountText = "x" + t.amount;
+
+    let name = t.name.toString();
+
+    if(t.amount === 1 && name === "")
+        name = word("untitled");
+
     return (
         <div className={s.tool}>
-            <div onClick={updateHidden} className={s.title}>{t.name.toString()} x{t.amount}</div>
+            <div onClick={updateHidden} className={s.title}>{name} {amountText}</div>
             {!t.hidden && <><div className={s.container}>
-                <div className={s.subtitle}>Назва</div>
+                <div className={s.subtitle}>{word("title")}</div>
                 <Input
-                    placeholder="Назва"
+                    placeholder={word("title")}
                     value={t.name.toString()}
                     onUpdate={val => update("name", val)}
                     disabled={state.sheet.locked}
                 />
-                <div className={s.subtitle}>Опис</div>
+                <div className={s.subtitle}>{word("description")}</div>
                 <Input
-                    placeholder="Опис"
+                    big={true}
+                    placeholder={word("description")}
                     value={t.notes.toString()}
                     onUpdate={val => update("notes", val)}
                     disabled={state.sheet.locked}
                 />
-                <div className={s.subtitle}>Вага</div>
+                <div className={s.subtitle}>{word("weight")}</div>
                 <Input
-                    placeholder="Вага"
+                    placeholder={word("weight")}
                     value={t.weight.toString()}
                     validate={validateWeight}
                     onUpdate={val => updateWeight(val)}
                     disabled={state.sheet.locked}
                 />
             </div>
-            <div className={s.subtitle}>Кількість</div>
+            <div className={s.subtitle}>{word("quantity")}</div>
             <Level type="toolAmount" name={id} always_active={true}/>
             <button onClick={remove} className={s.button} disabled={state.sheet.locked}>X</button>
             </>}

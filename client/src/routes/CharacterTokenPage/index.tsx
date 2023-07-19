@@ -1,8 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { updateCharacter } from "../../character";
 import Page, { block } from "../../components/Page";
-import { SERVER_URL } from "../../config";
+import { word } from "../../components/Language/language";
 
 export interface props {
 
@@ -15,11 +14,11 @@ export default function CharacterTokenPage (props: props) {
 
     const blocks: block[] = [
         {
-            texts: ["Введіть ваш токен"],
+            texts: [word("provide_your_token")],
             inputs: ["token"],
             buttons: [
                 {
-                    text: "Підтвердити",
+                    text: word("confirm"),
                     callback: async (inputs) => {
 
                         const token = inputs[0].value;
@@ -29,7 +28,7 @@ export default function CharacterTokenPage (props: props) {
                     }
                 },
                 {
-                    text: "Назад",
+                    text: word("back"),
                     callback: (inputs) => {
                         nav("/");
                     }

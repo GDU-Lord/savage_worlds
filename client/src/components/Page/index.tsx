@@ -1,5 +1,9 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState } from "react";
 import s from "./index.module.sass";
+import { lang, language } from "../../words";
+import { useDispatch, useSelector } from "react-redux";
+import { bindActionCreators } from "@reduxjs/toolkit";
+import { RootState, actions } from "../../store/reducers";
 
 export interface button {
     text: string;
@@ -25,6 +29,10 @@ export default function Page ({ blocks }: props) {
         callback(inputs);
     }
 
+    const dispatch = useDispatch();
+    const { setLanguage } = bindActionCreators(actions, dispatch);
+    const state = useSelector((state: RootState) => state.sheet.sheet);
+
     const list = blocks.map((block, index) => {
 
         const texts = block.texts.map((text, index) => {
@@ -47,9 +55,16 @@ export default function Page ({ blocks }: props) {
 
     });
 
+    const languages = [["EN", lang.EN], ["UA", lang.UA]].map(([text, value], index) => {
+        
+        const selectClass = state.language === value ? s.selected : "";
+        return (<button key={index} className={s.language+" "+selectClass} onClick={() => setLanguage(value as language)}>{text}</button>);
+    });
+
     return (
         <div className={s.page}>
             {list}
+            <div className={s.language_container}>{languages}</div>
         </div>
     );
 

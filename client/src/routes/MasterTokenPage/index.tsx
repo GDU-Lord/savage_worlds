@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Page, { block } from "../../components/Page";
 import { SERVER_URL } from "../../config";
 import { actions, RootState } from "../../store/reducers";
+import { word } from "../../components/Language/language";
 
 export interface props {
 
@@ -27,11 +28,11 @@ export default function MasterTokenPage (props: props) {
 
     const blocks: block[] = [
         {
-            texts: ["Введіть ваш токен"],
+            texts: [word("provide_your_token")],
             inputs: ["token"],
             buttons: [
                 {
-                    text: "Підтвердити",
+                    text: word("confirm"),
                     async callback (inputs) {
                         const token = inputs[0].value;
                         const res = await fetch(SERVER_URL + "/campaign/get?master_token=" + token);
@@ -43,7 +44,7 @@ export default function MasterTokenPage (props: props) {
                     }
                 },
                 {
-                    text: "Назад",
+                    text: word("back"),
                     callback () {
                         nav("/");
                     }

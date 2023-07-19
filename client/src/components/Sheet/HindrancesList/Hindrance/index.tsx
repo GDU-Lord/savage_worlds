@@ -5,6 +5,7 @@ import { Hindrance as HindranceClass } from "../../../../store/slices/sheet/hind
 import s from "./index.module.sass";
 import { bindActionCreators } from "@reduxjs/toolkit";
 import { useEffect } from "react";
+import { word } from "../../../Language/language";
 
 export interface props {
     id: string;
@@ -46,14 +47,14 @@ export default function Hindrance ({ id }: props) {
             <div onClick={updateHidden} className={s.title}>{getName(t.name.toString())}</div>
             {!t.hidden && <><div>
                 {!state.sheet.locked && <Input
-                    placeholder="Назва"
+                    placeholder={word("title")}
                     value={t.name.toString()}
                     onUpdate={val => update("name", val)}
                     disabled={state.sheet.locked}
                 />}
             </div>
             <Input
-                placeholder="Опис"
+                placeholder={word("description")}
                 big={true}
                 value={t.notes.toString()}
                 onUpdate={val => update("notes", val)}

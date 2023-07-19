@@ -142,6 +142,7 @@ export interface character {
 }
 
 export function updateCharacter (dispatch: any, state: RootState["sheet"], character: character) {
+
     const {
         initAttributes,
         initSkills,
@@ -310,8 +311,6 @@ export function characterSave (state: RootState["sheet"]) {
 
     
     const data = JSON.stringify(character);
-
-    console.log(character.token);
 
     if(data !== savedData)
         socket.emit("character-save", character);

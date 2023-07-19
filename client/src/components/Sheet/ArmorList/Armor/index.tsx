@@ -5,6 +5,7 @@ import { Armor as ArmorClass } from "../../../../store/slices/sheet/armor";
 import s from "./index.module.sass";
 import { bindActionCreators } from "@reduxjs/toolkit";
 import { useEffect } from "react";
+import { word } from "../../../Language/language";
 
 export interface props {
     id: string;
@@ -59,40 +60,40 @@ export default function Armor ({ id }: props) {
         <div className={s.armor}>
             <div onClick={updateHidden} className={s.title}>{armor.name.toString()} ({armor.armor})</div>
             {!armor.hidden && <><div className={s.container}>
-                <div className={s.subtitle}>Назва</div>
+                <div className={s.subtitle}>{word("title")}</div>
                 <Input
-                    placeholder="Назва"
+                    placeholder={word("title")}
                     value={armor.name.toString()}
                     onUpdate={val => updateName(val)}
                     disabled={state.sheet.locked}
                 />
-                <div className={s.subtitle}>Броня</div>
+                <div className={s.subtitle}>{word("armor")}</div>
                 <Input
-                    placeholder="Захист"
+                    placeholder={word("armor")}
                     value={armor.armor.toString()}
                     validate={validate}
                     onUpdate={val => update("armor", val)}
                     disabled={state.sheet.locked}
                 />
-                <div className={s.subtitle}>Ціна</div>
+                <div className={s.subtitle}>{word("price")}</div>
                 <Input
-                    placeholder="Ціна"
+                    placeholder={word("price")}
                     value={armor.price.toString()}
                     validate={validate}
                     onUpdate={val => update("price", val)}
                     disabled={state.sheet.locked}
                 />
-                <div className={s.subtitle}>Вага</div>
+                <div className={s.subtitle}>{word("weight")}</div>
                 <Input
-                    placeholder="Вага"
+                    placeholder={word("weight")}
                     value={armor.weight.toString()}
                     validate={validate}
                     onUpdate={val => update("weight", val)}
                     disabled={state.sheet.locked}
                 />
-                <div className={s.subtitle}>Мін. сила</div>
+                <div className={s.subtitle}>{word("min_strength")}</div>
                 <Input
-                    placeholder="Мін. сила"
+                    placeholder={word("min_strength")}
                     value={armor.minStrength.toString()}
                     validate={validate}
                     onUpdate={val => update("minStrength", val)}
@@ -100,13 +101,13 @@ export default function Armor ({ id }: props) {
                 />
             </div>
             <div className={s.container2}>
-                <button onClick={() => toggle("head")} className={`${s.button} ${armor.head ? s.select : ""}`} disabled={state.sheet.locked}>Г</button>
-                <button onClick={() => toggle("torso")} className={`${s.button} ${armor.torso ? s.select : ""}`} disabled={state.sheet.locked}>Т</button>
-                <button onClick={() => toggle("arms")} className={`${s.button} ${armor.arms ? s.select : ""}`} disabled={state.sheet.locked}>Р</button>
-                <button onClick={() => toggle("legs")} className={`${s.button} ${armor.legs ? s.select : ""}`} disabled={state.sheet.locked}>Н</button>
+                <button onClick={() => toggle("head")} className={`${s.button} ${armor.head ? s.select : ""}`} disabled={state.sheet.locked}>{word("h_head")}</button>
+                <button onClick={() => toggle("torso")} className={`${s.button} ${armor.torso ? s.select : ""}`} disabled={state.sheet.locked}>{word("t_torso")}</button>
+                <button onClick={() => toggle("arms")} className={`${s.button} ${armor.arms ? s.select : ""}`} disabled={state.sheet.locked}>{word("a_arms")}</button>
+                <button onClick={() => toggle("legs")} className={`${s.button} ${armor.legs ? s.select : ""}`} disabled={state.sheet.locked}>{word("l_legs")}</button>
             </div>
             <div className={s.container3}>
-                <button onClick={() => toggle("worn")} className={`${s.button} ${armor.worn ? s.select : ""}`} disabled={state.sheet.locked}>Одягнена</button>
+                <button onClick={() => toggle("worn")} className={`${s.button} ${armor.worn ? s.select : ""}`} disabled={state.sheet.locked}>{word("worn")}</button>
                 <button onClick={remove} className={s.remove} disabled={state.sheet.locked}>X</button>
             </div></>}
         </div>

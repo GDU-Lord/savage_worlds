@@ -5,6 +5,7 @@ import { Shield as ShieldClass } from "../../../../store/slices/sheet/shields";
 import s from "./index.module.sass";
 import { bindActionCreators } from "@reduxjs/toolkit";
 import { useEffect } from "react";
+import { word } from "../../../Language/language";
 
 export interface props {
     id: string;
@@ -57,50 +58,50 @@ export default function Shield ({ id }: props) {
 
     return (
         <div className={s.armor}>
-            <div onClick={updateHidden} className={s.title}>{shield.name.toString()} ({shield.bonus})</div>
+            <div onClick={updateHidden} className={s.title}>{shield.name.toString()} ({shield.bonus}) [{shield.cover}]</div>
             {!shield.hidden && <><div className={s.container}>
-                <div className={s.subtitle}>Назва</div>
+                <div className={s.subtitle}>{word("title")}</div>
                 <Input
-                    placeholder="Назва"
+                    placeholder={word("title")}
                     value={shield.name.toString()}
                     onUpdate={val => updateName(val)}
                     disabled={state.sheet.locked}
                 />
-                <div className={s.subtitle}>Бонус</div>
+                <div className={s.subtitle}>{word("bonus")}</div>
                 <Input
-                    placeholder="Бонус"
+                    placeholder={word("bonus")}
                     value={shield.bonus.toString()}
                     validate={validate}
                     onUpdate={val => update("bonus", val)}
                     disabled={state.sheet.locked}
                 />
-                <div className={s.subtitle}>Укриття</div>
+                <div className={s.subtitle}>{word("cover")}</div>
                 <Input
-                    placeholder="Бонус"
+                    placeholder={word("cover")}
                     value={shield.cover.toString()}
                     validate={validate}
-                    onUpdate={val => update("bonus", val)}
+                    onUpdate={val => update("cover", val)}
                     disabled={state.sheet.locked}
                 />
-                <div className={s.subtitle}>Ціна</div>
+                <div className={s.subtitle}>{word("price")}</div>
                 <Input
-                    placeholder="Ціна"
+                    placeholder={word("price")}
                     value={shield.price.toString()}
                     validate={validate}
                     onUpdate={val => update("price", val)}
                     disabled={state.sheet.locked}
                 />
-                <div className={s.subtitle}>Вага</div>
+                <div className={s.subtitle}>{word("weight")}</div>
                 <Input
-                    placeholder="Вага"
+                    placeholder={word("weight")}
                     value={shield.weight.toString()}
                     validate={validate}
                     onUpdate={val => update("weight", val)}
                     disabled={state.sheet.locked}
                 />
-                <div className={s.subtitle}>Мін. сила</div>
+                <div className={s.subtitle}>{word("min_strength")}</div>
                 <Input
-                    placeholder="Мін. сила"
+                    placeholder={word("min_strength")}
                     value={shield.minStrength.toString()}
                     validate={validate}
                     onUpdate={val => update("minStrength", val)}
@@ -108,7 +109,7 @@ export default function Shield ({ id }: props) {
                 />
             </div>
             <div className={s.container3}>
-                <button onClick={() => toggleWorn()} className={`${s.button} ${shield.worn ? s.select : ""}`} disabled={state.sheet.locked}>Одягнений</button>
+                <button onClick={() => toggleWorn()} className={`${s.button} ${shield.worn ? s.select : ""}`} disabled={state.sheet.locked}>{word("worn")}</button>
                 <button onClick={remove} className={s.remove} disabled={state.sheet.locked}>X</button>
             </div></>}
         </div>

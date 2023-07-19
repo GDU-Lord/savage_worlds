@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { characterSave } from "../../../character";
-import { RootState } from "../../reducers";
+import { lang, language } from "../../../words";
 
 export interface state {
     locked: boolean;
     savedData: string;
     saved: boolean;
+    language: language;
 };
 
 const slice = createSlice({
@@ -13,7 +14,8 @@ const slice = createSlice({
     initialState: {
         locked: true,
         savedData: "",
-        saved: true
+        saved: true,
+        language: lang.UA
     } as state,
     reducers: {
         setLocked (state, { payload: locked }: { payload: boolean }) {
@@ -27,6 +29,9 @@ const slice = createSlice({
                 return;
             state.savedData = characterSave(payload);
             state.saved = true;
+        },
+        setLanguage (state, { payload }: {payload: language}) {
+            state.language = payload;
         }
     }
 });

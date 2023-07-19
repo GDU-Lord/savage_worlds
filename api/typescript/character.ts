@@ -204,7 +204,13 @@ export default class Character implements character {
         const characters = db.collection("characters");
 
         try {
-            return await characters.findOne({ token }) as character;
+            const data = await characters.findOne({ token }) as character;
+            const character = new Character(data.campaign_id);
+            for (const i in data) {
+                if(i in character)
+                    character[i] = data[i];
+            }
+            return character;
         }
         catch (err) {
             console.log(err);
