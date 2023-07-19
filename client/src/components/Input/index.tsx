@@ -72,6 +72,8 @@ export default function Input ({ disabled = false, big = false, placeholder = ""
 
         e.target.value = val;
 
+        check(e.target);
+
         if(!e.target.classList.contains(s.red))
             onUpdate(e.target.value);
         
