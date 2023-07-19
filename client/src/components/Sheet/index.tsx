@@ -15,6 +15,7 @@ import { characterSave } from "../../character";
 import { bindActionCreators } from "@reduxjs/toolkit";
 import { useEffect } from "react";
 import ShieldsList from "./ShieldsList";
+import { word } from "../Language/language";
 
 export interface props {
 
@@ -31,7 +32,7 @@ export default function Sheet (props: props) {
         sendData(state);
     }, [state]);
 
-    document.head.querySelector("title")!.innerText = state.text.name.trim() === "" ? "Персонаж" : state.text.name;
+    document.head.querySelector("title")!.innerText = state.text.name.trim() === "" ? word("character") : state.text.name;
 
     return (
         <div className={s.sheet}>

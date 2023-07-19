@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { attribute } from "./attributes";
+import { word } from "../../../components/Language/language";
+import words from "../../../words";
 
 export type state = {
     [key: string]: skill;
@@ -16,6 +18,7 @@ export interface skill {
     name: string;
     attribute: attribute | "none";
     core: boolean;
+    custom: boolean;
 };
 
 export class Skill implements skill {
@@ -36,58 +39,73 @@ export class Skill implements skill {
     name: string;
     attribute: attribute;
     core: boolean;
+    custom: boolean;
 
-    constructor (name: string, level: level, id: string, attribute: attribute, core: boolean = false) {
+    constructor (name: string, level: level, id: string, attribute: attribute, core: boolean = false, custom: boolean = false) {
+        
+        if(name === "") name = word(id as keyof typeof words) ?? word("untitled");
+
         this.name = name;
         this.level = level;
         this.id = id;
         this.attribute = attribute;
         this.core = core;
+        this.custom = custom;
         Skill.list[this.id] = this;
     }
 
 }
 
-new Skill("Загальні Знання", [4, 0], "common_knowledge", "smarts", true);
-new Skill("Уважність", [4, 0], "notice", "smarts", true);
-new Skill("Переконання", [4, 0], "persuasion", "spirit", true);
-new Skill("Непомітність", [4, 0], "stealth", "agility", true);
-new Skill("Атлетика", [4, 0], "athletics", "agility", true);
+new Skill("", [4, 0], "common_knowledge", "smarts", true);
+new Skill("", [4, 0], "notice", "smarts", true);
+new Skill("", [4, 0], "persuasion", "spirit", true);
+new Skill("", [4, 0], "stealth", "agility", true);
+new Skill("", [4, 0], "athletics", "agility", true);
 
-new Skill("Судноплавство", [0, 0], "boating", "agility");
-new Skill("Водіння", [0, 0], "driving", "agility");
-new Skill("Боротьба", [0, 0], "fighting", "agility");
+new Skill("", [0, 0], "boating", "agility");
+new Skill("", [0, 0], "driving", "agility");
+new Skill("", [0, 0], "fighting", "agility");
 // new Skill("Злам замків", [0, 0], "lockpicking", "agility");
-new Skill("Крадіжка", [0, 0], "thievery", "agility");
-new Skill("Пілотування", [0, 0], "piloting", "agility");
-new Skill("Їзда верхи", [0, 0], "riding", "agility");
-new Skill("Стрільба", [0, 0], "shooting", "agility");
+new Skill("", [0, 0], "thievery", "agility");
+new Skill("", [0, 0], "piloting", "agility");
+new Skill("", [0, 0], "riding", "agility");
+new Skill("", [0, 0], "shooting", "agility");
 // new Skill("Плавання", [0, 0], "swimming", "agility");
 // new Skill("Кидання", [0, 0], "throwing", "agility");
 
-new Skill("Азартні ігри", [0, 0], "gambling", "smarts");
-new Skill("Лікування", [0, 0], "healing", "smarts");
+new Skill("", [0, 0], "gambling", "smarts");
+new Skill("", [0, 0], "healing", "smarts");
 // new Skill("Розслідування", [0, 0], "investigation", "smarts");
-new Skill("Дослідження", [0, 0], "research", "smarts");
-new Skill("Ремонт", [0, 0], "repair", "smarts");
+new Skill("", [0, 0], "research", "smarts");
+new Skill("", [0, 0], "repair", "smarts");
 // new Skill("Вуличний жаргон", [0, 0], "streetwise", "smarts");
-new Skill("Бій", [0, 0], "battle", "smarts");
-new Skill("Хакерство", [0, 0], "hacking", "smarts");
-new Skill("Електроніка", [0, 0], "electronics", "smarts");
-new Skill("Дивна наука", [0, 0], "weird_science", "smarts");
-new Skill("Виживання", [0, 0], "survival", "smarts");
-new Skill("Насмішка", [0, 0], "taunt", "smarts");
-new Skill("Псионіка", [0, 0], "psionics", "smarts");
-new Skill("Заклинання", [0, 0], "spellcasting", "smarts");
+new Skill("", [0, 0], "battle", "smarts");
+new Skill("", [0, 0], "hacking", "smarts");
+new Skill("", [0, 0], "electronics", "smarts");
+new Skill("", [0, 0], "weird_science", "smarts");
+new Skill("", [0, 0], "survival", "smarts");
+new Skill("", [0, 0], "taunt", "smarts");
+new Skill("", [0, 0], "psionics", "smarts");
+new Skill("", [0, 0], "spellcasting", "smarts");
 // new Skill("Слідопитство", [0, 0], "tracking", "smarts");
 
-new Skill("Сміливість", [0, 0], "guts", "spirit");
-new Skill("Залякування", [0, 0], "intimidation", "spirit");
-new Skill("Виступ", [0, 0], "performance", "spirit");
-new Skill("Віра", [0, 0], "faith", "spirit");
-new Skill("Концентрація", [0, 0], "focus", "spirit");
+new Skill("", [0, 0], "guts", "spirit");
+new Skill("", [0, 0], "intimidation", "spirit");
+new Skill("", [0, 0], "performance", "spirit");
+new Skill("", [0, 0], "faith", "spirit");
+new Skill("", [0, 0], "focus", "spirit");
 
 // new Skill("Сходження", [0, 0], "climbing", "strength");
+
+const skill_attribute_regex = /(?<=([a-zA-Z0-9] ){1,}\()(Smarts|Vigor|Agility|Spirit|Strength)(?=\))/gi;
+
+function decodeSkillName (id: string): [string, attribute] {
+    const index = id.search(skill_attribute_regex);
+    if(index === -1) return [id, "none" as attribute];
+    const attribute = (id.match(skill_attribute_regex)?.[0].toLowerCase() ?? "none") as attribute;
+    id = id.slice(0, Math.max(index-1, 0));
+    return [id, attribute];
+}
 
 const slice = createSlice({
     name: "attributes",
@@ -97,7 +115,7 @@ const slice = createSlice({
 
             const skill = state[payload.name]; // payload.name = skill.id
 
-            if(skill.attribute === "none" && payload.value[0] === 0 && payload.value[1] === 0) {
+            if(skill.custom && payload.value[0] === 0 && payload.value[1] === 0) {
                 delete state[payload.name];
                 return;
             }
@@ -113,23 +131,28 @@ const slice = createSlice({
             
             for(const id in skills) {
                 let skill = state[id];
-                if(skill == null && (skills[id][0] !== 0 || skills[id][1] !== 0)) 
+                if(skill == null && (skills[id][0] !== 0 || skills[id][1] !== 0)) {
+                    const [name, attribute] = decodeSkillName(id);
                     skill = {
-                        attribute: "none",
+                        attribute,
                         level: [0, 0],
-                        name: id,
+                        name,
                         id: id,
-                        core: false
+                        core: false,
+                        custom: true
                     } as skill;
+                }
                 if(skill == null) continue;
-                newState[id] = new Skill(skill.name, skills[id] as level, skill.id, skill.attribute as attribute, skill.core);
+                const skillName = skill.custom ? skill.name : "";
+                newState[id] = new Skill(skillName, skills[id] as level, skill.id, skill.attribute as attribute, skill.core, skill.custom);
             }
 
             return newState;
 
         },
         addCustomSkill (state, { payload: id }: { payload: string }) {
-            state[id] = new Skill(id, [4,0], id, "none" as attribute, false);
+            const [name, attribute] = decodeSkillName(id);
+            state[id] = new Skill(name, [4,0], id, attribute, false, true);
         }
     }
 });

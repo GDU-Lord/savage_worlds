@@ -7,6 +7,7 @@ import Page, { block, button } from "../../components/Page";
 import Sheet from "../../components/Sheet";
 import { actions, RootState } from "../../store/reducers";
 import { socket } from "../../scripts";
+import { word } from "../../components/Language/language";
 
 export interface props {
 
@@ -36,13 +37,13 @@ export default function CharacterPage (props: props) {
     }
 
     const editButton: button = {
-        text: "Змінити",
+        text: word("edit"),
         callback () {
             setLocked(false);
         }
     };
     const lockButton: button = {
-        text: "Заблокувати",
+        text: word("lock"),
         callback () {
             setLocked(true);
         }
@@ -52,11 +53,11 @@ export default function CharacterPage (props: props) {
 
     const blocks: block[] = [
         {
-            texts: [title, <Clipboard text="Скопіювати посилання" value={createCharURL(state.text.token)}/>],
+            texts: [title, <Clipboard text={word("copy_link")} value={createCharURL(state.text.token)}/>],
             inputs: [],
             buttons: [
                 {
-                    text: "Меню",
+                    text: word("back"),
                     callback () {
                         nav("/");
                     },

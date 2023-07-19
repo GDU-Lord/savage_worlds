@@ -6,6 +6,7 @@ import { Edge as EdgeClass } from "../../../store/slices/sheet/edges";
 import Tab from "../Tab";
 import Edge from "./Edge";
 import s from "./index.module.sass";
+import { word } from "../../Language/language";
 
 export interface props {
 
@@ -39,7 +40,7 @@ export default function ToolsList (props: props) {
 
     return (
         <div className={s.edges_list}>
-            {(list.length > 0 || !state.sheet.locked) && <Tab name="edges" title="Сильні сторони">
+            {(list.length > 0 || !state.sheet.locked) && <Tab name="edges" title={word("edges")}>
                 {list}
                 {!state.sheet.locked && <button className={s.add} onClick={add} disabled={state.sheet.locked}>+</button>}
             </Tab>}

@@ -6,6 +6,7 @@ import { Tool as ToolClass } from "../../../store/slices/sheet/tools";
 import Tool from "./Tool";
 import s from "./index.module.sass";
 import Tab from "../Tab";
+import { word } from "../../Language/language";
 
 export interface props {
 
@@ -41,7 +42,7 @@ export default function ToolsList (props: props) {
 
     return (
         <div className={s.tools_list}>
-            {(list.length > 0 || !state.sheet.locked) && <Tab name="tools" title="Ресурси та інструменти">
+            {(list.length > 0 || !state.sheet.locked) && <Tab name="tools" title={word("resources_tools")}>
                 {list}
                 {!state.sheet.locked && <button className={s.add} onClick={add} disabled={state.sheet.locked}>+</button>}
             </Tab>}

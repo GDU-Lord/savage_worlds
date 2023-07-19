@@ -6,6 +6,7 @@ import { Hindrance as HindranceClass } from "../../../store/slices/sheet/hindran
 import Tab from "../Tab";
 import Hindrance from "./Hindrance";
 import s from "./index.module.sass";
+import { word } from "../../Language/language";
 
 export interface props {
 
@@ -39,7 +40,7 @@ export default function ToolsList (props: props) {
 
     return (
         <div className={s.hindrance_list}>
-            {(list.length > 0 || !state.sheet.locked) && <Tab name="hindrances" title="Слабкі сторони">
+            {(list.length > 0 || !state.sheet.locked) && <Tab name="hindrances" title={word("hindrances")}>
                 {list}
                 {!state.sheet.locked && <button className={s.add} onClick={add} disabled={state.sheet.locked}>+</button>}
             </Tab>}

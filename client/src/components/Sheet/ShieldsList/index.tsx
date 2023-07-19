@@ -6,6 +6,7 @@ import { Shield as ShieldClass } from "../../../store/slices/sheet/shields";
 import Tab from "../Tab";
 import Shield from "./Shield";
 import s from "./index.module.sass";
+import { word } from "../../Language/language";
 
 export interface props {
 
@@ -47,7 +48,7 @@ export default function ArmorList (props: props) {
 
     return (
         <div className={s.armor_list}>
-            {(list.length > 0 || !state.sheet.locked) && <Tab name="shields" title="Щити">
+            {(list.length > 0 || !state.sheet.locked) && <Tab name="shields" title={word("shields")}>
                 {list}
                 {!state.sheet.locked && <button className={s.add} onClick={add} disabled={state.sheet.locked}>+</button>}
             </Tab>}

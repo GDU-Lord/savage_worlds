@@ -11,10 +11,16 @@ import Clipboard from "../../components/Clipboard";
 import { isMobile, socketRequest } from "../../scripts";
 import s from "./index.module.sass";
 import Board from "../../components/Board";
+import { word } from "../../components/Language/language";
 
 export interface props {
 
 };
+
+function extractTag (name: string): string | undefined {
+    const regex = /\[.{1,}\]/g;
+    return name.match(regex)?.[0];
+}
 
 export default function MasterPage (props: props) {
 
@@ -30,26 +36,64 @@ export default function MasterPage (props: props) {
 
     const { updateCharacters, updateToken, addWindow } = bindActionCreators(actions, dispatch);
 
-    const characters: block["buttons"] = state.characters.map(({ name, token }) => ({
-        text: name === "" ? "---" : name,
-        callback: async () => {
+    // const characters: block["buttons"] = state.characters.map(({ name, token }) => ({
+    //     text: name === "" ? "---" : name,
+    //     callback: async () => {
 
-            if(isMobile())
-                window.open("/character?token=" + token);
-            else
-                addWindow("/character?token=" + token);
+    //         if(isMobile())
+    //             window.open("/character?token=" + token);
+    //         else
+    //             addWindow("/character?token=" + token);
 
+    //     }
+    // }));
+
+    const defaultCharList = "characters";
+
+    const characterTabs: { [key: string]: block } = {
+        [defaultCharList]: {
+            texts: [word("characters")],
+            inputs: [],
+            buttons: []
         }
-    }));
+    };
+
+    state.characters.forEach((char) => {
+        const tag = extractTag(char.name) ?? defaultCharList;
+        let name = char.name;
+        if(!(tag in characterTabs))
+            characterTabs[tag] = {
+                texts: [tag],
+                inputs: [],
+                buttons: []
+            };
+        if(tag !== defaultCharList)
+            name = name.replace(tag, "");
+        characterTabs[tag].buttons.push({
+            text: name === "" ? "---" : name,
+            callback: async () => {
+    
+                if(isMobile())
+                    window.open("/character?token=" + char.token);
+                else
+                    addWindow("/character?token=" + char.token);
+    
+            }
+        });
+    });
+
+    const characterBlocks = Object.values(characterTabs);
+    characterBlocks[0].texts[0] = word("characters");
 
     const blocks: block[] = [
         {
-            texts: ["Токен кампанії:", <Clipboard value={state.token} text="Скопіювати токен"/>],
+            texts: [word("campaign"), <Clipboard value={state.token} text={word("copy_token")}/>],
             inputs: [],
             buttons: [
                 {
-                    text: "Скинути токен",
+                    text: word("revoke_token"),
                     callback: async () => {
+                        if(!window.confirm(word("confirm_revoke_token"))) return;
                         const res = await fetch(SERVER_URL + "/campaign/reset", {
                             method: "put",
                             headers: { "Content-Type": "application/json" },
@@ -62,7 +106,7 @@ export default function MasterPage (props: props) {
                     }
                 },
                 {
-                    text: "Оновити",
+                    text: word("update"),
                     callback: async () => {
                         const res = await fetch(SERVER_URL + "/campaign/get?master_token=" + state.token);
                         const campaign = await res.json() as campaign;
@@ -72,17 +116,13 @@ export default function MasterPage (props: props) {
                 }
             ]
         },
-        {
-            texts: ["Персонажі"],
-            inputs: [],
-            buttons: characters
-        },
+        ...characterBlocks,
         {
             texts: [],
             inputs: [],
             buttons:[
                 {
-                    text: "Додати персонажа",
+                    text: word("add_character"),
                     callback: async (inputs) => {
                         
                         const {data, status} = await socketRequest<character>("character-create", state.token);
@@ -103,14 +143,14 @@ export default function MasterPage (props: props) {
                     }
                 },
                 {
-                    text: "Видалити персонажа",
+                    text: word("delete_character"),
                     callback: async (inputs) => {
                         
-                        const token = prompt("Введіть токен персонажа");
+                        const token = prompt(word("provide_character_token"));
 
                         if(token == null) return;
 
-                        const sure = window.confirm("Ви впевнені, що хочете видалити персонажа?");
+                        const sure = window.confirm(word("confirm_delete_character"));
                         
                         if(!sure) return;
 
@@ -133,7 +173,7 @@ export default function MasterPage (props: props) {
                     }
                 },
                 {
-                    text: "Меню",
+                    text: word("back"),
                     callback: (inputs) => {
                         nav("/");
                     }

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Page, { block } from "../../components/Page";
 import { SERVER_URL } from "../../config";
 import { actions } from "../../store/reducers";
+import { word } from "../../components/Language/language";
 
 export interface props {
 
@@ -18,23 +19,23 @@ export default function HomePage (props: props) {
 
     const blocks: block[] = [
         {
-            texts: ["Меню"],
+            texts: [word("menu")],
             inputs: [],
             buttons: [
                 {
-                    text: "Відкрити персонажа",
+                    text: word("open_character"),
                     callback (inputs) {
                         nav("/character/token")
                     }
                 },
                 {
-                    text: "Відкрити кампанію",
+                    text: word("open_campaign"),
                     callback (inputs) {
                         nav("/master/token")
                     }
                 },
                 {
-                    text: "Створити кампанію",
+                    text: word("create_campaign"),
                     async callback (inputs) {
                         
                         const res = await fetch(SERVER_URL+"/campaign/create", {

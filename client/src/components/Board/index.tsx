@@ -55,7 +55,6 @@ export default function Board (props: props) {
     });
 
     function foldUnfold (id: string) {
-        console.log(moved);
         if(moved) return;
         setWindowFolded({
             _id: id,

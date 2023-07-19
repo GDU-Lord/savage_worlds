@@ -6,6 +6,8 @@ import { skill } from "../../../store/slices/sheet/skills";
 import Level from "../../Level";
 import Tab from "../Tab";
 import s from "./index.module.sass";
+import { word } from "../../Language/language";
+import { attribute } from "../../../store/slices/sheet/attributes";
 
 export interface props {
 
@@ -26,13 +28,20 @@ export default function Skills (props: props) {
         else
             return skill.level[0] !== 0 || skill.level[1] !== 0;
     }).map((skill: skill, index) => {
+        
+        let attribute = "";
 
-        return (<div className={s.skill} key={index}><div className={s.skill_title}>{skill.name}</div><Level type="skills" name={skill.id} core={skill.core}/></div>);
+        if(skill.attribute !== "none")
+            attribute = `(${word(skill.attribute)})`;
+
+        return (<div className={s.skill} key={index}><div className={s.skill_title}>{skill.name}<span className={s.attribute}> {attribute}</span></div><Level type="skills" name={skill.id} core={skill.core}/></div>);
 
     });
 
+   
+
     function addSkill () {
-        const id = ref.current?.value.trim() ?? "";
+        let id = ref.current?.value.trim() ?? "";
         if(id === "")
             return;
         ref.current!.value = "";
@@ -42,7 +51,7 @@ export default function Skills (props: props) {
 
     return (
         <div className={s.skills}>
-            <Tab name="skills" title="Вміння">
+            <Tab name="skills" title={word("skills")}>
                 {list}
                 
                 {!state.sheet.locked && <>

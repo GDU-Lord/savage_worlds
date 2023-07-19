@@ -5,6 +5,7 @@ import { Weapon as WeaponClass } from "../../../../store/slices/sheet/weapons";
 import s from "./index.module.sass";
 import { bindActionCreators } from "@reduxjs/toolkit";
 import { useEffect } from "react";
+import { word } from "../../../Language/language";
 
 export interface props {
     id: string;
@@ -98,83 +99,84 @@ export default function Weapon ({ id }: props) {
         <div className={s.weapon}>
             <div onClick={updateHidden} className={s.title}>{w.name.toString()} {getDamage(w.damage)} {ap}</div>
             {!w.hidden && <><div className={s.container}>
-                <div className={s.subtitle}>Назва</div>
+                <div className={s.subtitle}>{word("title")}</div>
                 <Input
-                    placeholder="Назва"
+                    placeholder={word("title")}
                     value={w.name.toString()}
                     onUpdate={val => updateText("name", val)}
                     disabled={state.sheet.locked}
                 />
-                <div className={s.subtitle}>Ушкодження</div>
+                <div className={s.subtitle}>{word("damage")}</div>
                 <Input
-                    placeholder="Ушкодження"
+                    placeholder={word("damage")}
                     value={getDamage(w.damage)}
                     validate={validateDamage}
                     onUpdate={val => updateDamage(val as damage)}
                     disabled={state.sheet.locked}
                 />
-                <div className={s.subtitle}>Проникнення</div>
+                <div className={s.subtitle}>{word("armor_piercing")}</div>
                 <Input
-                    placeholder="Проникнення"
+                    placeholder={word("armor_piercing")}
                     value={w.ap.toString()}
                     validate={validate}
                     onUpdate={val => update("ap", val)}
                     disabled={state.sheet.locked}
                 />
-                <div className={s.subtitle}>Дистанція</div>
+                {w.type === "range" && <><div className={s.subtitle}>{word("range")}</div>
                 <Input
-                    placeholder="Дистанція"
+                    placeholder={word("range")}
                     value={w.range.toString()}
                     validate={validateRange}
                     onUpdate={val => updateRange(val as range)}
                     disabled={state.sheet.locked}
                 />
-                <div className={s.subtitle}>Частота</div>
+                <div className={s.subtitle}>{word("rate_of_fire")}</div>
                 <Input
-                    placeholder="Частота"
+                    placeholder={word("rate_of_fire")}
                     value={w.rof.toString()}
                     validate={validate}
                     onUpdate={val => update("rof", val)}
                     disabled={state.sheet.locked}
-                />
-                <div className={s.subtitle}>Мін. сила</div>
+                /></>}
+                <div className={s.subtitle}>{word("min_strength")}</div>
                 <Input
-                    placeholder="Мін. сила"
+                    placeholder={word("min_strength")}
                     value={w.minStrength.toString()}
                     validate={validate}
                     onUpdate={val => update("minStrength", val)}
                     disabled={state.sheet.locked}
                 />
-                <div className={s.subtitle}>Ціна</div>
+                <div className={s.subtitle}>{word("price")}</div>
                 <Input
-                    placeholder="Ціна"
+                    placeholder={word("price")}
                     value={w.price.toString()}
                     validate={validate}
                     onUpdate={val => update("price", val)}
                     disabled={state.sheet.locked}
                 />
-                <div className={s.subtitle}>Вага</div>
+                <div className={s.subtitle}>{word("weight")}</div>
                 <Input
-                    placeholder="Вага"
+                    placeholder={word("weight")}
                     value={w.weight.toString()}
                     validate={validate}
                     onUpdate={val => update("weight", val)}
                     disabled={state.sheet.locked}
                 />
-                <div className={s.subtitle}>Додатково</div>
+                <div className={s.subtitle}>{word("details")}</div>
                 <Input
-                    placeholder="Додатково"
+                    big={true}
+                    placeholder={word("details")}
                     value={w.notes.toString()}
                     onUpdate={val => updateText("notes", val)}
                     disabled={state.sheet.locked}
                 />
             </div>
             <div className={s.container2}>
-                <button onClick={() => updateType("melee")} className={`${s.button} ${w.type === "melee" ? s.select : ""}`} disabled={state.sheet.locked}>Ближня</button>
-                <button onClick={() => updateType("range")} className={`${s.button} ${w.type === "range" ? s.select : ""}`} disabled={state.sheet.locked}>Дальня</button>
+                <button onClick={() => updateType("melee")} className={`${s.button} ${w.type === "melee" ? s.select : ""}`} disabled={state.sheet.locked}>{word("melee")}</button>
+                <button onClick={() => updateType("range")} className={`${s.button} ${w.type === "range" ? s.select : ""}`} disabled={state.sheet.locked}>{word("ranged")}</button>
             </div>
             <div className={s.container3}>
-                <button onClick={() => toggle("worn")} className={`${s.button} ${w.worn ? s.select : ""}`} disabled={state.sheet.locked}>Одягнена</button>
+                <button onClick={() => toggle("worn")} className={`${s.button} ${w.worn ? s.select : ""}`} disabled={state.sheet.locked}>{word("worn")}</button>
                 <button onClick={remove} className={s.remove} disabled={state.sheet.locked}>X</button>
             </div></>}
         </div>
