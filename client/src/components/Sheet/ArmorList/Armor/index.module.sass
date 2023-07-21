@@ -41,9 +41,23 @@
             background-color: #84c795
             transform: scale(1, 1.05)
         .container
-            input
-                width: 91vw
+
+            input, textarea
                 margin-bottom: 0vw
+            .big_block
+                input, textarea
+                    width: 92vw
+            .double_block
+                width: 92vw
+                display: flex
+                justify-content: space-between
+                gap: 4%
+                .small_block
+                    width: 48%
+                    flex-basis: 48%
+                    display: inline-block
+                    input
+                        width: 100%
         .container2
             display: block
             width: 94vw

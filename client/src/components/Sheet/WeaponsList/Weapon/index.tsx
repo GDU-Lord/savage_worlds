@@ -99,77 +99,87 @@ export default function Weapon ({ id }: props) {
         <div className={s.weapon}>
             <div onClick={updateHidden} className={s.title}>{w.name.toString()} {getDamage(w.damage)} {ap}</div>
             {!w.hidden && <><div className={s.container}>
-                <div className={s.subtitle}>{word("title")}</div>
-                <Input
-                    placeholder={word("title")}
-                    value={w.name.toString()}
-                    onUpdate={val => updateText("name", val)}
-                    disabled={state.sheet.locked}
-                />
-                <div className={s.subtitle}>{word("damage")}</div>
-                <Input
-                    placeholder={word("damage")}
-                    value={getDamage(w.damage)}
-                    validate={validateDamage}
-                    onUpdate={val => updateDamage(val as damage)}
-                    disabled={state.sheet.locked}
-                />
-                <div className={s.subtitle}>{word("armor_piercing")}</div>
-                <Input
-                    placeholder={word("armor_piercing")}
-                    value={w.ap.toString()}
-                    validate={validate}
-                    onUpdate={val => update("ap", val)}
-                    disabled={state.sheet.locked}
-                />
-                {w.type === "range" && <><div className={s.subtitle}>{word("range")}</div>
-                <Input
-                    placeholder={word("range")}
-                    value={w.range.toString()}
-                    validate={validateRange}
-                    onUpdate={val => updateRange(val as range)}
-                    disabled={state.sheet.locked}
-                />
-                <div className={s.subtitle}>{word("rate_of_fire")}</div>
-                <Input
-                    placeholder={word("rate_of_fire")}
-                    value={w.rof.toString()}
-                    validate={validate}
-                    onUpdate={val => update("rof", val)}
-                    disabled={state.sheet.locked}
-                /></>}
-                <div className={s.subtitle}>{word("min_strength")}</div>
-                <Input
-                    placeholder={word("min_strength")}
-                    value={w.minStrength.toString()}
-                    validate={validate}
-                    onUpdate={val => update("minStrength", val)}
-                    disabled={state.sheet.locked}
-                />
-                <div className={s.subtitle}>{word("price")}</div>
-                <Input
-                    placeholder={word("price")}
-                    value={w.price.toString()}
-                    validate={validate}
-                    onUpdate={val => update("price", val)}
-                    disabled={state.sheet.locked}
-                />
-                <div className={s.subtitle}>{word("weight")}</div>
-                <Input
-                    placeholder={word("weight")}
-                    value={w.weight.toString()}
-                    validate={validate}
-                    onUpdate={val => update("weight", val)}
-                    disabled={state.sheet.locked}
-                />
-                <div className={s.subtitle}>{word("details")}</div>
-                <Input
-                    big={true}
-                    placeholder={word("details")}
-                    value={w.notes.toString()}
-                    onUpdate={val => updateText("notes", val)}
-                    disabled={state.sheet.locked}
-                />
+                <div className={s.double_block}>
+                    <div className={s.small_block}>
+                        <div className={s.subtitle}>{word("title")}</div>
+                        <Input
+                            placeholder={word("title")}
+                            value={w.name.toString()}
+                            onUpdate={val => updateText("name", val)}
+                            disabled={state.sheet.locked}
+                        />
+                        <div className={s.subtitle}>{word("damage")}</div>
+                        <Input
+                            placeholder={word("damage")}
+                            value={w.damage}
+                            validate={validateDamage}
+                            onUpdate={val => updateDamage(val as damage)}
+                            disabled={state.sheet.locked}
+                        />
+                        <div className={s.subtitle}>{word("armor_piercing")}</div>
+                        <Input
+                            placeholder={word("armor_piercing")}
+                            value={w.ap.toString()}
+                            validate={validate}
+                            onUpdate={val => update("ap", val)}
+                            disabled={state.sheet.locked}
+                        />
+                        {w.type === "range" && <>
+                        <div className={s.subtitle}>{word("range")}</div>
+                        <Input
+                            placeholder={word("range")}
+                            value={w.range.toString()}
+                            validate={validateRange}
+                            onUpdate={val => updateRange(val as range)}
+                            disabled={state.sheet.locked}
+                        /></>}
+                    </div>
+                    <div className={s.small_block}>
+                        {w.type === "range" && <>
+                        <div className={s.subtitle}>{word("rate_of_fire")}</div>
+                        <Input
+                            placeholder={word("rate_of_fire")}
+                            value={w.rof.toString()}
+                            validate={validate}
+                            onUpdate={val => update("rof", val)}
+                            disabled={state.sheet.locked}
+                        /></>}
+                        <div className={s.subtitle}>{word("min_strength")}</div>
+                        <Input
+                            placeholder={word("min_strength")}
+                            value={w.minStrength.toString()}
+                            validate={validate}
+                            onUpdate={val => update("minStrength", val)}
+                            disabled={state.sheet.locked}
+                        />
+                        <div className={s.subtitle}>{word("price")}</div>
+                        <Input
+                            placeholder={word("price")}
+                            value={w.price.toString()}
+                            validate={validate}
+                            onUpdate={val => update("price", val)}
+                            disabled={state.sheet.locked}
+                        />
+                        <div className={s.subtitle}>{word("weight")}</div>
+                        <Input
+                            placeholder={word("weight")}
+                            value={w.weight.toString()}
+                            validate={validate}
+                            onUpdate={val => update("weight", val)}
+                            disabled={state.sheet.locked}
+                        />
+                    </div>
+                    <div className={s.big_block}>
+                        <div className={s.subtitle}>{word("details")}</div>
+                        <Input
+                            big={true}
+                            placeholder={word("details")}
+                            value={w.notes.toString()}
+                            onUpdate={val => updateText("notes", val)}
+                            disabled={state.sheet.locked}
+                        />
+                    </div>
+                </div>
             </div>
             <div className={s.container2}>
                 <button onClick={() => updateType("melee")} className={`${s.button} ${w.type === "melee" ? s.select : ""}`} disabled={state.sheet.locked}>{word("melee")}</button>

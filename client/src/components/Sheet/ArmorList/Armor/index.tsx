@@ -60,45 +60,53 @@ export default function Armor ({ id }: props) {
         <div className={s.armor}>
             <div onClick={updateHidden} className={s.title}>{armor.name.toString()} ({armor.armor})</div>
             {!armor.hidden && <><div className={s.container}>
-                <div className={s.subtitle}>{word("title")}</div>
-                <Input
-                    placeholder={word("title")}
-                    value={armor.name.toString()}
-                    onUpdate={val => updateName(val)}
-                    disabled={state.sheet.locked}
-                />
-                <div className={s.subtitle}>{word("armor")}</div>
-                <Input
-                    placeholder={word("armor")}
-                    value={armor.armor.toString()}
-                    validate={validate}
-                    onUpdate={val => update("armor", val)}
-                    disabled={state.sheet.locked}
-                />
-                <div className={s.subtitle}>{word("price")}</div>
-                <Input
-                    placeholder={word("price")}
-                    value={armor.price.toString()}
-                    validate={validate}
-                    onUpdate={val => update("price", val)}
-                    disabled={state.sheet.locked}
-                />
-                <div className={s.subtitle}>{word("weight")}</div>
-                <Input
-                    placeholder={word("weight")}
-                    value={armor.weight.toString()}
-                    validate={validate}
-                    onUpdate={val => update("weight", val)}
-                    disabled={state.sheet.locked}
-                />
-                <div className={s.subtitle}>{word("min_strength")}</div>
-                <Input
-                    placeholder={word("min_strength")}
-                    value={armor.minStrength.toString()}
-                    validate={validate}
-                    onUpdate={val => update("minStrength", val)}
-                    disabled={state.sheet.locked}
-                />
+                <div className={s.big_block}>
+                    <div className={s.subtitle}>{word("title")}</div>
+                    <Input
+                        placeholder={word("title")}
+                        value={armor.name.toString()}
+                        onUpdate={val => updateName(val)}
+                        disabled={state.sheet.locked}
+                    />
+                </div>
+                <div className={s.double_block}>
+                    <div className={s.small_block}>
+                        <div className={s.subtitle}>{word("armor")}</div>
+                        <Input
+                            placeholder={word("armor")}
+                            value={armor.armor.toString()}
+                            validate={validate}
+                            onUpdate={val => update("armor", val)}
+                            disabled={state.sheet.locked}
+                        />
+                        <div className={s.subtitle}>{word("price")}</div>
+                        <Input
+                            placeholder={word("price")}
+                            value={armor.price.toString()}
+                            validate={validate}
+                            onUpdate={val => update("price", val)}
+                            disabled={state.sheet.locked}
+                        />
+                    </div>
+                    <div className={s.small_block}>
+                        <div className={s.subtitle}>{word("weight")}</div>
+                        <Input
+                            placeholder={word("weight")}
+                            value={armor.weight.toString()}
+                            validate={validate}
+                            onUpdate={val => update("weight", val)}
+                            disabled={state.sheet.locked}
+                        />
+                        <div className={s.subtitle}>{word("min_strength")}</div>
+                        <Input
+                            placeholder={word("min_strength")}
+                            value={armor.minStrength.toString()}
+                            validate={validate}
+                            onUpdate={val => update("minStrength", val)}
+                            disabled={state.sheet.locked}
+                        />
+                    </div>
+                </div>
             </div>
             <div className={s.container2}>
                 <button onClick={() => toggle("head")} className={`${s.button} ${armor.head ? s.select : ""}`} disabled={state.sheet.locked}>{word("h_head")}</button>

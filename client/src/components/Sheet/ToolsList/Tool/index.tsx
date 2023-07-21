@@ -71,29 +71,31 @@ export default function Tool ({ id }: props) {
         <div className={s.tool}>
             <div onClick={updateHidden} className={s.title}>{name} {amountText}</div>
             {!t.hidden && <><div className={s.container}>
-                <div className={s.subtitle}>{word("title")}</div>
-                <Input
-                    placeholder={word("title")}
-                    value={t.name.toString()}
-                    onUpdate={val => update("name", val)}
-                    disabled={state.sheet.locked}
-                />
-                <div className={s.subtitle}>{word("description")}</div>
-                <Input
-                    big={true}
-                    placeholder={word("description")}
-                    value={t.notes.toString()}
-                    onUpdate={val => update("notes", val)}
-                    disabled={state.sheet.locked}
-                />
-                <div className={s.subtitle}>{word("weight")}</div>
-                <Input
-                    placeholder={word("weight")}
-                    value={t.weight.toString()}
-                    validate={validateWeight}
-                    onUpdate={val => updateWeight(val)}
-                    disabled={state.sheet.locked}
-                />
+                <div className={s.big_block}>
+                    <div className={s.subtitle}>{word("title")}</div>
+                    <Input
+                        placeholder={word("title")}
+                        value={t.name.toString()}
+                        onUpdate={val => update("name", val)}
+                        disabled={state.sheet.locked}
+                    />
+                    <div className={s.subtitle}>{word("weight")}</div>
+                    <Input
+                        placeholder={word("weight")}
+                        value={t.weight.toString()}
+                        validate={validateWeight}
+                        onUpdate={val => updateWeight(val)}
+                        disabled={state.sheet.locked}
+                    />
+                    <div className={s.subtitle}>{word("description")}</div>
+                    <Input
+                        big={true}
+                        placeholder={word("description")}
+                        value={t.notes.toString()}
+                        onUpdate={val => update("notes", val)}
+                        disabled={state.sheet.locked}
+                    />
+                </div>
             </div>
             <div className={s.subtitle}>{word("quantity")}</div>
             <Level type="toolAmount" name={id} always_active={true}/>

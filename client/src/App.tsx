@@ -6,6 +6,7 @@ import HomePage from "./routes/HomePage";
 import MasterPage from "./routes/MasterPage";
 import MasterTokenPage from "./routes/MasterTokenPage";
 import Language from "./components/Language/language";
+import SummaryPage from "./routes/SummaryPage";
 
 function App() {
     
@@ -20,6 +21,7 @@ function App() {
                         <Route path="/master" element={<MasterPage/>}/>
                         <Route path="/character/token" element={<CharacterTokenPage/>}/>
                         <Route path="/character" element={<CharacterPage/>}/>
+                        <Route path="/summary" element={<SummaryPage/>}/>
                     </Routes>
                 </Language>
             </Socket>

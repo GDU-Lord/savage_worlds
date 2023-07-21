@@ -126,4 +126,5 @@ export default {
     // other
     "untitled": ["Без Назви", "Untitled", "One Xajsunga"],
     "character": ["Персонаж", "Character", "Pers"],
+    "modifier": ["Модифікатор", "Modifier", "Modyfikator"],
 };

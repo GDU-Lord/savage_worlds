@@ -47,8 +47,21 @@
             display: inline-block
         .container
             input, textarea
-                width: 91vw
-                margin-bottom: 0
+                margin-bottom: 0vw
+            .big_block
+                input, textarea
+                    width: 92vw
+            .double_block
+                width: 92vw
+                display: flex
+                justify-content: space-between
+                gap: 4%
+                .small_block
+                    width: 48%
+                    flex-basis: 48%
+                    display: inline-block
+                    input
+                        width: 100%
         .amount
             width: 94vw
             background-color: red
