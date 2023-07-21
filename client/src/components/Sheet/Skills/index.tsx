@@ -54,10 +54,10 @@ export default function Skills (props: props) {
             <Tab name="skills" title={word("skills")}>
                 {list}
                 
-                {!state.sheet.locked && <>
+                {!state.sheet.locked && <div className={s.custom_skill}>
                     <input ref={ref} className={s.custom_id} disabled={state.sheet.locked}/>
                     <button className={s.add} onClick={addSkill} disabled={state.sheet.locked}>+</button>
-                </>}
+                </div>}
             </Tab>
         </div>
     );

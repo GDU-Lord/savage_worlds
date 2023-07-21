@@ -37,7 +37,7 @@ export interface skills {
     survival: level;
     taunt: level;
     // tracking: level;
-    guts: level;
+    // guts: level;
     intimidation: level;
     // climbing: level;
     battle: level;
@@ -49,6 +49,8 @@ export interface skills {
     performance: level;
     faith: level;
     focus: level;
+    academics: level;
+    occult: level;
     [key: string]: level;
 };
 
@@ -144,6 +146,7 @@ export interface character {
     hindrances: hindrance[];
     tools: tool[];
     armor: armor[];
+    shields: shield[];
     weapons: weapon[];
 }
 
@@ -166,7 +169,6 @@ const defaultSkills = {
     repair: [0, 0],
     survival: [0, 0],
     taunt: [0, 0],
-    guts: [0, 0],
     intimidation: [0, 0],
     psionics: [0, 0],
     focus: [0, 0],
@@ -177,6 +179,8 @@ const defaultSkills = {
     spellcasting: [0, 0],
     performance: [0, 0],
     hacking: [0, 0],
+    academics: [0, 0],
+    occult: [0, 0],
 };
 
 function copy (obj: { [key: string]: any } | string | number) {
@@ -204,8 +208,9 @@ export default class Character implements character {
         const characters = db.collection("characters");
 
         try {
-            const data = await characters.findOne({ token }) as character;
-            const character = new Character(data.campaign_id);
+            let data = await characters.findOne({ token }) as character;
+            data = this.fix(data);
+            let character = new Character(data.campaign_id);
             for (const i in data) {
                 if(i in character)
                     character[i] = data[i];
@@ -284,8 +289,8 @@ export default class Character implements character {
     static fix (character: character) {
         const skills = character.skills;
         for(const i in defaultSkills) {
-            if(skills[i] == null)
-                skills[i] = copy(defaultSkills);
+            if(skills[i] == null || !(skills[i] instanceof Array) || skills[i].length != 2)
+                skills[i] = copy(defaultSkills[i]);
         }
         return character;
     }

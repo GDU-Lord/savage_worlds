@@ -143,6 +143,8 @@ export interface character {
 
 export function updateCharacter (dispatch: any, state: RootState["sheet"], character: character) {
 
+    console.log(character);
+    
     const {
         initAttributes,
         initSkills,

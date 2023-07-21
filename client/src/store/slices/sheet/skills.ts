@@ -83,13 +83,15 @@ new Skill("", [0, 0], "battle", "smarts");
 new Skill("", [0, 0], "hacking", "smarts");
 new Skill("", [0, 0], "electronics", "smarts");
 new Skill("", [0, 0], "weird_science", "smarts");
+new Skill("", [0, 0], "academics", "smarts");
 new Skill("", [0, 0], "survival", "smarts");
 new Skill("", [0, 0], "taunt", "smarts");
 new Skill("", [0, 0], "psionics", "smarts");
 new Skill("", [0, 0], "spellcasting", "smarts");
+new Skill("", [0, 0], "occult", "smarts");
 // new Skill("Слідопитство", [0, 0], "tracking", "smarts");
 
-new Skill("", [0, 0], "guts", "spirit");
+// new Skill("", [0, 0], "guts", "spirit");
 new Skill("", [0, 0], "intimidation", "spirit");
 new Skill("", [0, 0], "performance", "spirit");
 new Skill("", [0, 0], "faith", "spirit");

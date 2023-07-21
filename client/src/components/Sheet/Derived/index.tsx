@@ -23,7 +23,7 @@ export default function Derived (props: props) {
                 </div>
                 <div className={s.field}>
                     <div className={s.field_title}>{word("toughness")}:</div>
-                    <div className={s.field_content}>{toughness}({armor})</div>
+                    <div className={s.field_content}>{toughness+armor}({armor})</div>
                 </div>
                 <div className={s.field}>    
                     <div className={s.field_title}>{word("load")}:</div>
