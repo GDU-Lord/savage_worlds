@@ -1,3 +1,8 @@
+.red
+    background-color: #dd8787
+.green
+    background-color: #84c795
+    
 @media (max-width: 800px) 
     .weapon
         text-align: left
@@ -5,8 +10,12 @@
         margin: auto
         margin-top: 3vw
         border-bottom: 0.5vw solid #000
+        .container4
+            div
+                width: 94vw
         .title
             font-size: 7vw
+            color: #fff4a0
             // font-weight: 700
             background-color: #5d81ab
             width: 92vw
@@ -18,8 +27,8 @@
             padding: 1vw
             // border: 0.5vw solid #676767
             border: none
-            width: 59.6vw
-            height: 5vw
+            width: 72vw
+            min-height: 5.8vw
             font-size: 6vw
             color: #6f4b22
             margin-bottom: 3vw
@@ -60,12 +69,14 @@
                     input
                         width: 100%
         .container2
-            display: block
+            display: flex
             width: 94vw
             margin-top: 3vw
+            justify-content: space-between
+            gap: 0px
             .button
                 // background-color: #5d81ab
-                width: 47vw
+                width: 100%
         .container3
             display: block
             width: 94vw
@@ -82,6 +93,14 @@
                 display: inline-block
             .button
                 width: 60vw
+        .amount
+            width: 94vw
+            background-color: red
+            button
+                width: 47vw
+                height: 8vw
+                font-size: 6vw
+                border: none
 
 
 @media (min-width: 800px) 

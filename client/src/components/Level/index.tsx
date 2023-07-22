@@ -6,11 +6,12 @@ import { actions, RootState } from "../../store/reducers";
 import { attribute } from "../../store/slices/sheet/attributes";
 import { state as otherState } from "../../store/slices/sheet/other";
 import { Tool as ToolClass } from "../../store/slices/sheet/tools";
+import { Weapon as WeaponClass } from "../../store/slices/sheet/weapons";
 import Input from "../Input";
 import s from "./index.module.sass";
 
 export interface props {
-    type: "attributes" | "skills" | "other" | "toolAmount";
+    type: "attributes" | "skills" | "other" | "toolAmount" | "weaponAmount";
     name: string | attribute;
     always_active?: boolean;
     core?: boolean;
@@ -30,9 +31,11 @@ export default function Level ({ type, name, core = false, always_active = false
         mod = state.other[name as keyof otherState];
     if(type === "toolAmount")
         mod = state.tools.list.byId[name].amount;
+    if(type === "weaponAmount")
+        mod = state.weapons.list.byId[name].amount;
 
     const dispatch = useDispatch();
-    const { saveData, setAttribute, setSkill, updateDerivedStatistics, setOtherStatistic, updateTool } = bindActionCreators(actions, dispatch);
+    const { saveData, setAttribute, setSkill, updateDerivedStatistics, setOtherStatistic, updateTool, updateWeapon } = bindActionCreators(actions, dispatch);
 
     function setModifier (value: string) {
         mod = +value;
@@ -75,6 +78,11 @@ export default function Level ({ type, name, core = false, always_active = false
                 tool.amount = mod;
                 updateTool(tool);
                 break;
+            case "weaponAmount":
+                const weapon = new WeaponClass(state.weapons.list.byId[name], true);
+                weapon.amount = mod;
+                updateWeapon(weapon);
+                break;
         }
         saveData();
     }
@@ -88,7 +96,7 @@ export default function Level ({ type, name, core = false, always_active = false
 
     return (
         <div className={s.level}>
-            { type !== "other" && type !== "toolAmount" && <>
+            { type !== "other" && type !== "toolAmount" && type !== "weaponAmount" && <>
                 <button disabled={type === "attributes" || core || locked} onClick={() => setDie(0)} className={s.die+" "+(die === 0 ? s.select : null)}>0</button>
                 <button onClick={() => setDie(4)} className={s.die+" "+(die === 4 ? s.select : null)} disabled={locked}>4</button>
                 <button onClick={() => setDie(6)} className={s.die+" "+(die === 6 ? s.select : null)} disabled={locked}>6</button>

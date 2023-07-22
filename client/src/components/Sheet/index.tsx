@@ -16,6 +16,7 @@ import { bindActionCreators } from "@reduxjs/toolkit";
 import { useEffect } from "react";
 import ShieldsList from "./ShieldsList";
 import { word } from "../Language/language";
+import NotesList from "./NotesList";
 
 export interface props {
 
@@ -38,6 +39,7 @@ export default function Sheet (props: props) {
         <div className={s.sheet}>
             <TextStats/>
             <Derived/>
+            <NotesList/>
             <EdgesList/>
             <HindrancesList/>
             <OtherStats/>

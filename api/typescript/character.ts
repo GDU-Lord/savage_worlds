@@ -74,17 +74,14 @@ export interface otherStatistics {
     bennies: number;
 };
 
-export interface edge {
+export interface note {
     id: string;
     name: string;
     notes: string;
 };
 
-export interface hindrance {
-    id: string;
-    name: string;
-    notes: string;
-};
+export interface edge extends note {};
+export interface hindrance extends note {};
 
 export interface tool {
     id: string;
@@ -128,10 +125,12 @@ export interface weapon {
     range: string;
     rof: number;
     ap: number;
+    blast: "s" | "m" | "l" | "c";
     minStrength: number;
     damage: string;
     notes: string;
     worn: boolean;
+    amount: number;
 };
 
 export interface character {
@@ -144,6 +143,7 @@ export interface character {
     textStatistics: textStatistics;
     edges: edge[];
     hindrances: hindrance[];
+    notes: note[];
     tools: tool[];
     armor: armor[];
     shields: shield[];
@@ -304,6 +304,7 @@ export default class Character implements character {
     textStatistics: textStatistics;
     edges: edge[];
     hindrances: hindrance[];
+    notes: note[];
     tools: tool[];
     armor: armor[];
     shields: shield[];
@@ -342,6 +343,7 @@ export default class Character implements character {
         };
         this.edges = [];
         this.hindrances = [];
+        this.notes = [];
         this.tools = [];
         this.armor = [];
         this.shields = [];

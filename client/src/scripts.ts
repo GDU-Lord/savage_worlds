@@ -81,15 +81,15 @@ export function parseModifier (mod: number) {
 export function getDamage (weapon: weapon, strength: level, modifier: number = 0) {
 
     // armor piercing
-    const ap = weapon.ap !== 0 ? `[${weapon.ap}]` : "";
+    let other = weapon.ap !== 0 ? ` [${weapon.ap}]` : "";
 
     // modifier
     let mod = +(weapon.damage.match(/(\+|-)[1-9][0-9]{0,}/)?.[0] ?? "0");
     
     // weapon die
     let die1 = [
-        weapon.damage.match(/(?<=d)(4|6|8|10|12)/), 
-        weapon.damage.match(/[1-9][0-9]{0,}(?=d)/)
+        weapon.damage.match(/(?<=(d|к))(4|6|8|10|12)/), 
+        weapon.damage.match(/[1-9][0-9]{0,}(?=(d|к))/)
     ].map((inp) => +(inp?.[0] ?? "0"));
 
     // strength die
@@ -107,10 +107,22 @@ export function getDamage (weapon: weapon, strength: level, modifier: number = 0
         // adding the strength modifier
         mod += strength[1];
     }
+    else if(weapon.type === "throwable")
+        other += " #"+weapon.blast.toUpperCase();
     // adding fatigue and wounds modifiers
     mod += modifier;
     // converting mofifier to text
     const modText = parseModifier(mod);
 
-    return `${die1[1]}d${die1[0]}${die2}${modText} ${ap}`;
+    return `${die1[1]}d${die1[0]}${die2}${modText}${other}`;
+}
+
+export function getBlast (val: weapon["blast"]) {
+    const table = {
+        s: 2,
+        m: 4,
+        l: 6,
+        c: 9,
+    };
+    return val.toUpperCase() + `(${table[val]})`;
 }

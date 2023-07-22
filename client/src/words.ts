@@ -77,13 +77,16 @@ export default {
     "armor_piercing": ["Проникнення", "Armor piercing", "Prabitie"],
     "range": ["Дистанція", "Range", "Dystancjjon"],
     "rate_of_fire": ["Частота", "Rate of fire", "Ccastota"],
+    "blast": ["Вибух", "Blast", "Bavovna"],
     "details": ["Додатково", "Details", "Dogebnisse"],
     "melee": ["Ближня", "Melee", "Priventivna"],
     "ranged": ["Дальня", "Ranged", "Dalnja"],
+    "throwable": ["Кидальна", "Throwable", "Ssiknisse"],
     "weapons": ["Зброя", "Weapons", "Vafe"],
-    // edges & hindrances
+    // note, edges & hindrances
     "edges": ["Сильні сторони", "Edges", "Plotni zajte"],
     "hindrances": ["Недоліки", "Hindrances", "Minusy"],
+    "notes": ["Нотатки", "Notes", "Notatky"],
     // attributes
     "attributes": ["Атрибути", "Attributes", "Atrybuty"],
     "agility": ["Спритність", "Agility", "Ggynga"],

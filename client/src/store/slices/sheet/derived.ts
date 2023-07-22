@@ -91,7 +91,7 @@ const slice = createSlice({
             for(const id of weapons.list.allIds) {
                 const item = weapons.list.byId[id];
                 if(item.worn)
-                    weight += item.weight;
+                    weight += item.weight * (item.type === "throwable" ? item.amount : 1);
             }
 
             for(const id of tools.list.allIds) {

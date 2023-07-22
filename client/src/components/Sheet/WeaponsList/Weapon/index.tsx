@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import { actions, RootState } from "../../../../store/reducers";
 import Input from "../../../Input";
-import { Weapon as WeaponClass } from "../../../../store/slices/sheet/weapons";
+import { Weapon as WeaponClass, weapon } from "../../../../store/slices/sheet/weapons";
 import s from "./index.module.sass";
 import { bindActionCreators } from "@reduxjs/toolkit";
 import { useEffect } from "react";
 import { word } from "../../../Language/language";
-import { getDamage } from "../../../../scripts";
+import { getDamage, getBlast } from "../../../../scripts";
+import Level from "../../../Level";
 
 export interface props {
     id: string;
@@ -38,6 +39,7 @@ export default function Weapon ({ id }: props) {
     const validate = (val: string) => !isNaN(+val);
     const validateDamage = (val: string) => val.search(/(^|^(\((к|d)(4|6|8|10|12)((\+|\-)[1-9][0-9]{0,}|)\)\+))[1-9][0-9]{0,}(к|d)(4|6|8|10|12)($|(\+|\-)[1-9][0-9]{0,}$)/) > -1;
     const validateRange = (val: string) => val.search(/^[1-9][0-9]{0,}\/[1-9][0-9]{0,}\/[1-9][0-9]{0,}$/) > -1;
+    const validateBlast = (val: string) => val.search(/^(S|M|L|C|S\(2\)|M\(4\)|L\(6\)|C\(9\))$/) > -1;
 
     function update (field: "price" | "weight" | "minStrength" | "rof" | "ap", val: string) {
         const weapon = new WeaponClass(w, true);
@@ -67,11 +69,15 @@ export default function Weapon ({ id }: props) {
         saveData();
     }
 
-    function updateType (val: "range" | "melee") {
+    function updateType (val: "range" | "melee" | "throwable") {
         const weapon = new WeaponClass(w, true);
         weapon.type = val;
         updateWeapon(weapon);
         saveData();
+    }
+
+    function updateBlast (val: string) {
+        return (val.match(/(S|M|L|C)/)?.[0] ?? "S").toLowerCase();
     }
 
     function remove () {
@@ -94,11 +100,23 @@ export default function Weapon ({ id }: props) {
         toggleHiddenWeapon(id);
     }
 
+    function changeAmmount (n: number) {
+        const tool = new WeaponClass(w, true);
+        tool.amount += n;
+        updateWeapon(tool);
+        saveData();
+    }
+
     // const ap = w.ap === 0 ? "" : `[${w.ap}]`;
+
+    let amountText = "";
+    
+    if(w.type === "throwable" && w.amount !== 1)
+        amountText = " x" + w.amount;
 
     return (
         <div className={s.weapon}>
-            <div onClick={updateHidden} className={s.title}>{w.name.toString()} {getDamage(w, state.attributes.strength)}</div>
+            <div onClick={updateHidden} className={s.title}>{w.name.toString()} {getDamage(w, state.attributes.strength)}{amountText}</div>
             {!w.hidden && <><div className={s.container}>
                 <div className={s.block_container}>
                     <div className={s.double_block}>
@@ -126,7 +144,7 @@ export default function Weapon ({ id }: props) {
                                 onUpdate={val => update("ap", val)}
                                 disabled={state.sheet.locked}
                             />
-                            {w.type === "range" && <>
+                            {(w.type === "range" || w.type === "throwable") && <>
                             <div className={s.subtitle}>{word("range")}</div>
                             <Input
                                 placeholder={word("range")}
@@ -144,6 +162,15 @@ export default function Weapon ({ id }: props) {
                                 value={w.rof.toString()}
                                 validate={validate}
                                 onUpdate={val => update("rof", val)}
+                                disabled={state.sheet.locked}
+                            /></>}
+                            {w.type === "throwable" && <>
+                            <div className={s.subtitle}>{word("blast")}</div>
+                            <Input
+                                placeholder={word("blast")}
+                                value={getBlast(w.blast.toString() as weapon["blast"])}
+                                validate={validateBlast}
+                                onUpdate={val => updateBlast(val)}
                                 disabled={state.sheet.locked}
                             /></>}
                             <div className={s.subtitle}>{word("min_strength")}</div>
@@ -184,14 +211,21 @@ export default function Weapon ({ id }: props) {
                     />
                 </div>
             </div>
+            {w.type === "throwable" && <div className={s.container4}><div className={s.subtitle}>{word("quantity")}</div>
+            <Level type="weaponAmount" name={id} always_active={true}/></div>}
             <div className={s.container2}>
                 <button onClick={() => updateType("melee")} className={`${s.button} ${w.type === "melee" ? s.select : ""}`} disabled={state.sheet.locked}>{word("melee")}</button>
                 <button onClick={() => updateType("range")} className={`${s.button} ${w.type === "range" ? s.select : ""}`} disabled={state.sheet.locked}>{word("ranged")}</button>
+                <button onClick={() => updateType("throwable")} className={`${s.button} ${w.type === "throwable" ? s.select : ""}`} disabled={state.sheet.locked}>{word("throwable")}</button>
             </div>
             <div className={s.container3}>
                 <button onClick={() => toggle("worn")} className={`${s.button} ${w.worn ? s.select : ""}`} disabled={state.sheet.locked}>{word("worn")}</button>
                 <button onClick={remove} className={s.remove} disabled={state.sheet.locked}>X</button>
             </div></>}
+            {w.type === "throwable" && w.hidden && <div className={s.amount}>
+                <button onClick={() => changeAmmount(-1)} className={s.red}>-</button>
+                <button onClick={() => changeAmmount(1)} className={s.green}>+</button>
+            </div>}
         </div>
     );
 

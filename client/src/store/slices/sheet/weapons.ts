@@ -6,15 +6,17 @@ export interface weapon {
     name: string; // format: name (bullet type)
     price: number;
     weight: number;
-    type: "melee" | "range";
+    type: "melee" | "range" | "throwable";
     range: `${number}/${number}/${number}`;
     rof: number;
+    blast: "s" | "m" | "l" | "c";
     ap: number;
     minStrength: number;
     damage: `${number}${"к" | "d"}${die}${`${"+" | "-"}${number}` | ""}`; // 2d5+3
     notes: string;
     worn: boolean;
     hidden: boolean;
+    amount: number;
 }
 
 export class Weapon implements weapon {
@@ -25,30 +27,34 @@ export class Weapon implements weapon {
     name: string;
     price: number;
     weight: number;
-    type: "melee" | "range";
+    type: "melee" | "range" | "throwable";
     range: `${number}/${number}/${number}`;
     rof: number;
     ap: number;
+    blast: "s" | "m" | "l" | "c";
     minStrength: number;
     damage: `${number}${"к" | "d"}${die}${`${"+" | "-"}${number}` | ""}`;
     notes: string;
     worn: boolean;
     hidden: boolean;
+    amount: number;
 
     constructor (weapon: weapon, persist_id: boolean = false) {
 
-        this.name = weapon.name;
-        this.price = weapon.price;
-        this.weight = weapon.weight;
-        this.type = weapon.type;
-        this.range = weapon.range;
-        this.rof = weapon.rof;
-        this.ap = weapon.ap;
-        this.minStrength = weapon.minStrength;
-        this.damage = weapon.damage;
-        this.notes = weapon.notes;
-        this.worn = weapon.worn;
+        this.name = weapon.name ?? "";
+        this.price = weapon.price ?? 0;
+        this.weight = weapon.weight ?? 0;
+        this.type = weapon.type ?? "range";
+        this.range = weapon.range ?? "5/10/20";
+        this.rof = weapon.rof ?? 1;
+        this.blast = weapon.blast ?? "s";
+        this.ap = weapon.ap ?? 0;
+        this.minStrength = weapon.minStrength ?? 6;
+        this.damage = weapon.damage ?? "1d6";
+        this.notes = weapon.notes ?? "";
+        this.worn = weapon.worn ?? true;
         this.hidden = weapon.hidden ?? true;
+        this.amount = weapon.amount ?? 1;
 
         const newId = ObjectId();
         this.id = persist_id ? weapon.id ?? newId : newId;
@@ -82,7 +88,7 @@ const slice = createSlice({
             }
         },
         updateWeapon (state, { payload: weapon }: { payload: Weapon }) {
-            state.list.byId[weapon.id] = weapon;
+            state.list.byId[weapon.id] = new Weapon(weapon, true);
         },
         deleteWeapon (state, { payload: id }: { payload: string }) {
             const index = state.list.allIds.findIndex(val => val === id);
