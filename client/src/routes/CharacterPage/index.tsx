@@ -62,6 +62,12 @@ export default function CharacterPage (props: props) {
                         nav("/");
                     },
                 },
+                {
+                    text: word("summary"),
+                    callback () {
+                        nav("/summary?token="+state.text.token);
+                    }
+                },
                 state.sheet.locked ? editButton : lockButton
             ],
         }

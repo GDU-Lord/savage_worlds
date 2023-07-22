@@ -29,6 +29,7 @@ export default {
     // sheet
     // other params
     "copy_link": ["Скопіювати посилання", "Copy link", "Kopirn di-zsylku"],
+    "summary": ["Короткий опис", "Summary", "Kurc obgesstorb"],
     "lock": ["Заблокувати", "Lock", "Zablokirn"],
     "edit": ["Редагувати", "Edit", "Redahirn"],
     "player_name": ["Ім'я гравця", "Player name", "Imjja di-sspilera"],

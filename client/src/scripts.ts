@@ -1,5 +1,6 @@
 import { io } from "socket.io-client";
 import { SERVER_URL } from "./config";
+import { weapon } from "./store/slices/sheet/weapons";
 
 export function ObjectId () {
     const m = Math;
@@ -71,4 +72,45 @@ export function CopyObject<Type> (obj: Type) {
 
 export function isMobile () {
     return window.innerWidth <= 800;
+}
+
+export function parseModifier (mod: number) {
+    return mod === 0 ? "" : ((mod > 0 ? "+" : "") + String(mod));
+}
+
+export function getDamage (weapon: weapon, strength: level, modifier: number = 0) {
+
+    // armor piercing
+    const ap = weapon.ap !== 0 ? `[${weapon.ap}]` : "";
+
+    // modifier
+    let mod = +(weapon.damage.match(/(\+|-)[1-9][0-9]{0,}/)?.[0] ?? "0");
+    
+    // weapon die
+    let die1 = [
+        weapon.damage.match(/(?<=d)(4|6|8|10|12)/), 
+        weapon.damage.match(/[1-9][0-9]{0,}(?=d)/)
+    ].map((inp) => +(inp?.[0] ?? "0"));
+
+    // strength die
+    let die2 = "";
+
+    // melee attacks
+    if(weapon.type === "melee") {
+        // restricting the weapon die
+        die1[0] = Math.min(die1[0], strength[0]);
+        // doubling the weapon die
+        if(strength[0] as unknown as number === die1[0])
+            die1[1] ++;
+        else // adding a strength die
+            die2 = "+1d" + strength[0];
+        // adding the strength modifier
+        mod += strength[1];
+    }
+    // adding fatigue and wounds modifiers
+    mod += modifier;
+    // converting mofifier to text
+    const modText = parseModifier(mod);
+
+    return `${die1[1]}d${die1[0]}${die2}${modText} ${ap}`;
 }
