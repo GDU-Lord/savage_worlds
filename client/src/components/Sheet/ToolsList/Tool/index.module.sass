@@ -1,7 +1,9 @@
+@import '../../../../config'
+
 .red
-    background-color: #dd8787
+    background-color: $c5
 .green
-    background-color: #84c795
+    background-color: $c4
     
 @media (max-width: 800px)
     .tool
@@ -9,28 +11,22 @@
         width: 94vw
         margin: auto
         margin-top: 3vw
-        border-bottom: 0.5vw solid #000
+        border-bottom: 0.5vw solid $c4
         .title
             font-size: 7vw
-            color: #fff4a0
-            // font-weight: 700
-            background-color: #5d81ab
+            color: $ct
+            background-color: $c2
             width: 92vw
             padding: 1vw
-            // border-bottom: 0.5vw solid
-            // margin-bottom: 2vw
             cursor: pointer
         .select
             background-color: red
         input, textarea
             padding: 1.1vw
-            // border: 0.5vw solid #676767
             border: none
-            // border: none
             width: 59.6vw
             height: 5.8vw
             font-size: 6vw
-            color: #6f4b22
             margin-bottom: 3vw
         .subtitle
             font-size: 6vw
@@ -38,11 +34,9 @@
             width: 11vw
             height: 8vw
             font-size: 6vw
-            // border: 0.5vw solid #797979
-            // border-radius: 1vw
             border: none
             display: inline-block
-            background-color: #d98585
+            background-color: $c5
         div
             width: 83vw
             display: inline-block

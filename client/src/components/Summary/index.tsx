@@ -59,9 +59,11 @@ export default function Summary (props: props) {
     console.log(state);
 
     useEffect(() => {
-        console.log("upd");
+        // window.document.title
         updateDerivedStatistics(state);
     }, [state]);
+
+    document.head.querySelector("title")!.innerText = state.text.name.trim() === "" ? word("character") : state.text.name;
 
     // armor level
     let head = 0;

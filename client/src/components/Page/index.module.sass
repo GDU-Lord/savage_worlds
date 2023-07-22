@@ -1,17 +1,16 @@
+@import '../../config'
+
 @media (max-width: 800px)
     body::-webkit-scrollbar
         display: none
     body
         padding: 1vw
         margin: 0
-        background-color: #005d8f
+        background-color: $c3
         scrollbar-width: 0
         
     .page
-        background-color: rgba(255, 255, 255, 0.8)
         width: 98vw
-        // border: 1vw solid black
-        // border-radius: 3vw
         font-family: Arial
         margin-bottom: 0.5vw
         .language_container
@@ -25,9 +24,9 @@
                 height: 7vw
                 font-size: 6vw
                 border: none
-                background-color: #5cbb9b
+                background-color: $c1
             .selected
-                background-color: #5c85bb
+                background-color: $c4
         .block
             text-align: center
             border-bottom: 0.5vw solid black
@@ -54,11 +53,9 @@
             button
                 width: 88vw
                 padding: 0
-                // border: 0.5vw solid black
-                // border-radius: 1vw
                 border: none
                 margin-bottom: 3vw
-                background-color: #5cbb9b
+                background-color: $c1
 
 @media (min-width: 800px)
     body
@@ -66,10 +63,10 @@
         margin: 0
         display: flex
         // max-wdith: 2100px
-        background-color: #005d8f
+        background-color: #6e5333
     
     .page
-        background-color: #e2e2e2
+        background-color: $c3
         width: #{"min(calc(100vw - 50px), 2000px)"}
         max-height: #{"calc(100vh - 40px)"}
         overflow-y: scroll
@@ -78,7 +75,6 @@
         // border-radius: 15px
         font-family: Arial
         margin-bottom: 2.5px
-        background-color: rgba(255, 255, 255, 0.8)
         &::-webkit-scrollbar
             display: none
         .language_container
@@ -92,9 +88,9 @@
                 height: 35px
                 font-size: 30px
                 border: none
-                background-color: #5cbb9b
+                background-color: $c1
             .selected
-                background-color: #5c85bb
+                background-color: $c4
         .block
             text-align: center
             border-bottom: 2.5px solid black
@@ -126,4 +122,4 @@
                 // border-radius: 5px
                 border: none
                 margin-bottom: 15px
-                background-color: #5cbb9b
+                background-color: $c1
