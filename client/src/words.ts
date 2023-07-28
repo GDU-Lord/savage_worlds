@@ -131,4 +131,13 @@ export default {
     "untitled": ["Без Назви", "Untitled", "One Xajsunga"],
     "character": ["Персонаж", "Character", "Pers"],
     "modifier": ["Модифікатор", "Modifier", "Modyfikator"],
+    "actions": ["Дії", "Actions", "Gemaxy"],
+    "add_wound": ["Додати рану", "Add wound", "Dogebn ranu"],
+    "subtract_wound": ["Відняти рану", "Subtract wound", "Vidnejmn ranu"],
+    "distracted": ["Спантеличений❓", "Distracted❓", "Vidvoliktist❓"],
+    "not_distracted": ["Не спантеличений", "Not distracted", "Ne vidvolikist"],
+    "voulnerable": ["Вразливий💔", "Voulnerable💔", "Vrazlyvyj💔"],
+    "not_voulnerable": ["Не вразливий", "Not voulnerable", "Ne vrazlyvyj"],
+    "shaken": ["Струшений💢", "Shaken💢", "Strusytist💢"],
+    "not_shaken": ["Не струшений", "Not shaken", "Ne stusytist"],
 };

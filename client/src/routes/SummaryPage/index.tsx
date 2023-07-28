@@ -23,7 +23,11 @@ export default function SummaryPage (props: props) {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const state = useSelector((state: RootState) => state.sheet);
+    const summaryState = useSelector((state: RootState) => state.summary);
     const nav = useNavigate();
+
+    const dispatch = useDispatch();
+    const { setWounds, setDistracted, setShaken, setVoulnerable } = bindActionCreators(actions, dispatch);
 
     useEffect(() => {
         const token = searchParams.get("token") ?? "";
@@ -57,9 +61,55 @@ export default function SummaryPage (props: props) {
         }
     ];
 
+    const blocks2: block[] = [
+        {
+            texts: [word("actions")],
+            inputs: [],
+            buttons: [
+                {
+                    text: `${word("wounds")} (${summaryState.wounds+state.other.wounds})`,
+                    callback () {
+                        
+                    },
+                },
+                {
+                    text: word("add_wound"),
+                    callback () {
+                        setWounds(summaryState.wounds+1);
+                    },
+                },
+                {
+                    text: word("subtract_wound"),
+                    callback () {
+                        setWounds(summaryState.wounds-1);
+                    },
+                },
+                {
+                    text: summaryState.shaken ? word("shaken") : word("not_shaken"),
+                    callback () {
+                        setShaken(!summaryState.shaken);
+                    },
+                },
+                {
+                    text: summaryState.voulnerable ? word("voulnerable") : word("not_voulnerable"),
+                    callback () {
+                        setVoulnerable(!summaryState.voulnerable);
+                    },
+                },
+                {
+                    text: summaryState.distracted ? word("distracted") : word("not_distracted"),
+                    callback () {
+                        setDistracted(!summaryState.distracted);
+                    },
+                },
+            ],
+        }
+    ];
+
     return (<>
         <Page blocks={blocks}/>
         <Summary/>
+        <Page blocks={blocks2} language={false}/>
     </>);
 
 }

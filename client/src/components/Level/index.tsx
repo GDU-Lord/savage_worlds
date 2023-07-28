@@ -7,7 +7,7 @@ import { attribute } from "../../store/slices/sheet/attributes";
 import { state as otherState } from "../../store/slices/sheet/other";
 import { Tool as ToolClass } from "../../store/slices/sheet/tools";
 import { Weapon as WeaponClass } from "../../store/slices/sheet/weapons";
-import Input from "../Input";
+import Input, { validateNumber } from "../Input";
 import s from "./index.module.sass";
 
 export interface props {
@@ -107,7 +107,7 @@ export default function Level ({ type, name, core = false, always_active = false
             <Input
                 placeholder="0"
                 value={mod.toString()}
-                validate={value => !isNaN(+value)}
+                validate={validateNumber}
                 onUpdate={setModifier}
                 disabled={locked}
             />

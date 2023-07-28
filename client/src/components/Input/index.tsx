@@ -10,6 +10,8 @@ export interface props {
     onUpdate?: (value: string) => void;
 };
 
+export const validateNumber = (val: string) => val.search(/^[0-9][0-9]{0,}(\.[0-9][0-9]{0,}){0,1}((\+|\-|\/|\*|\^)[0-9][0-9]{0,}(\.[0-9][0-9]{0,}){0,1}){0,1}$/) > -1;
+
 
 export default function Input ({ disabled = false, big = false, placeholder = "", value = "", validate = () => true, onUpdate = () => {}}: props) {
 
@@ -43,7 +45,7 @@ export default function Input ({ disabled = false, big = false, placeholder = ""
         
         isFocused = false;
 
-        const regex = /^[1-9][0-9]{0,}(\*|\/|\+|\-|\^)[1-9][0-9]{0,}$/g;
+        const regex = /^[0-9][0-9]{0,}(\.[0-9][0-9]{0,}){0,1}(\*|\/|\+|\-|\^)[0-9][0-9]{0,}(\.[0-9][0-9]{0,}){0,1}$/g;
 
         let val = e.target.value;
 

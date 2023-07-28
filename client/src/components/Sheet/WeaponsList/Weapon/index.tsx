@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { actions, RootState } from "../../../../store/reducers";
-import Input from "../../../Input";
+import Input, { validateNumber } from "../../../Input";
 import { Weapon as WeaponClass, weapon } from "../../../../store/slices/sheet/weapons";
 import s from "./index.module.sass";
 import { bindActionCreators } from "@reduxjs/toolkit";
@@ -36,7 +36,6 @@ export default function Weapon ({ id }: props) {
         saveData();
     }
 
-    const validate = (val: string) => !isNaN(+val);
     const validateDamage = (val: string) => val.search(/(^|^(\((к|d)(4|6|8|10|12)((\+|\-)[1-9][0-9]{0,}|)\)\+))[1-9][0-9]{0,}(к|d)(4|6|8|10|12)($|(\+|\-)[1-9][0-9]{0,}$)/) > -1;
     const validateRange = (val: string) => val.search(/^[1-9][0-9]{0,}\/[1-9][0-9]{0,}\/[1-9][0-9]{0,}$/) > -1;
     const validateBlast = (val: string) => val.search(/^(S|M|L|C|S\(2\)|M\(4\)|L\(6\)|C\(9\))$/) > -1;
@@ -140,7 +139,7 @@ export default function Weapon ({ id }: props) {
                             <Input
                                 placeholder={word("armor_piercing")}
                                 value={w.ap.toString()}
-                                validate={validate}
+                                validate={validateNumber}
                                 onUpdate={val => update("ap", val)}
                                 disabled={state.sheet.locked}
                             />
@@ -160,7 +159,7 @@ export default function Weapon ({ id }: props) {
                             <Input
                                 placeholder={word("rate_of_fire")}
                                 value={w.rof.toString()}
-                                validate={validate}
+                                validate={validateNumber}
                                 onUpdate={val => update("rof", val)}
                                 disabled={state.sheet.locked}
                             /></>}
@@ -177,7 +176,7 @@ export default function Weapon ({ id }: props) {
                             <Input
                                 placeholder={word("min_strength")}
                                 value={w.minStrength.toString()}
-                                validate={validate}
+                                validate={validateNumber}
                                 onUpdate={val => update("minStrength", val)}
                                 disabled={state.sheet.locked}
                             />
@@ -185,7 +184,7 @@ export default function Weapon ({ id }: props) {
                             <Input
                                 placeholder={word("price")}
                                 value={w.price.toString()}
-                                validate={validate}
+                                validate={validateNumber}
                                 onUpdate={val => update("price", val)}
                                 disabled={state.sheet.locked}
                             />
@@ -193,7 +192,7 @@ export default function Weapon ({ id }: props) {
                             <Input
                                 placeholder={word("weight")}
                                 value={w.weight.toString()}
-                                validate={validate}
+                                validate={validateNumber}
                                 onUpdate={val => update("weight", val)}
                                 disabled={state.sheet.locked}
                             />

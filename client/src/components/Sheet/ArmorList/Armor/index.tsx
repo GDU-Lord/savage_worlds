@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { actions, RootState } from "../../../../store/reducers";
-import Input from "../../../Input";
+import Input, { validateNumber } from "../../../Input";
 import { Armor as ArmorClass } from "../../../../store/slices/sheet/armor";
 import s from "./index.module.sass";
 import { bindActionCreators } from "@reduxjs/toolkit";
@@ -30,8 +30,6 @@ export default function Armor ({ id }: props) {
         updateArmor(armor);
         saveData();
     }
-
-    const validate = (val: string) => !isNaN(+val);
 
     function update (field: "armor" | "price" | "weight" | "minStrength", val: string) {
         const armor = new ArmorClass(state.armor.list.byId[id], true);
@@ -75,7 +73,7 @@ export default function Armor ({ id }: props) {
                         <Input
                             placeholder={word("armor")}
                             value={armor.armor.toString()}
-                            validate={validate}
+                            validate={validateNumber}
                             onUpdate={val => update("armor", val)}
                             disabled={state.sheet.locked}
                         />
@@ -83,7 +81,7 @@ export default function Armor ({ id }: props) {
                         <Input
                             placeholder={word("price")}
                             value={armor.price.toString()}
-                            validate={validate}
+                            validate={validateNumber}
                             onUpdate={val => update("price", val)}
                             disabled={state.sheet.locked}
                         />
@@ -93,7 +91,7 @@ export default function Armor ({ id }: props) {
                         <Input
                             placeholder={word("weight")}
                             value={armor.weight.toString()}
-                            validate={validate}
+                            validate={validateNumber}
                             onUpdate={val => update("weight", val)}
                             disabled={state.sheet.locked}
                         />
@@ -101,7 +99,7 @@ export default function Armor ({ id }: props) {
                         <Input
                             placeholder={word("min_strength")}
                             value={armor.minStrength.toString()}
-                            validate={validate}
+                            validate={validateNumber}
                             onUpdate={val => update("minStrength", val)}
                             disabled={state.sheet.locked}
                         />

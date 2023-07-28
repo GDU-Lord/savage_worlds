@@ -18,9 +18,10 @@ export interface block {
 
 export interface props {
     blocks: block[];
+    language?: boolean;
 };
 
-export default function Page ({ blocks }: props) {
+export default function Page ({ blocks, language = true }: props) {
 
     function onClick (e: React.MouseEvent<HTMLButtonElement>, callback: (inputs: NodeListOf<HTMLInputElement>) => void) {
         const button = e.target as HTMLButtonElement;
@@ -64,7 +65,7 @@ export default function Page ({ blocks }: props) {
     return (
         <div className={s.page}>
             {list}
-            <div className={s.language_container}>{languages}</div>
+            {language && <div className={s.language_container}>{languages}</div>}
         </div>
     );
 

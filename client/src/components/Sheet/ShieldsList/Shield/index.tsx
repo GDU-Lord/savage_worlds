@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { actions, RootState } from "../../../../store/reducers";
-import Input from "../../../Input";
+import Input, { validateNumber } from "../../../Input";
 import { Shield as ShieldClass } from "../../../../store/slices/sheet/shields";
 import s from "./index.module.sass";
 import { bindActionCreators } from "@reduxjs/toolkit";
@@ -30,8 +30,6 @@ export default function Shield ({ id }: props) {
         updateShield(shield);
         saveData();
     }
-
-    const validate = (val: string) => !isNaN(+val);
 
     function update (field: "bonus" | "cover" | "price" | "weight" | "minStrength", val: string) {
         const shield = new ShieldClass(state.shields.list.byId[id], true);
@@ -73,7 +71,7 @@ export default function Shield ({ id }: props) {
                         <Input
                             placeholder={word("bonus")}
                             value={shield.bonus.toString()}
-                            validate={validate}
+                            validate={validateNumber}
                             onUpdate={val => update("bonus", val)}
                             disabled={state.sheet.locked}
                         />
@@ -81,7 +79,7 @@ export default function Shield ({ id }: props) {
                         <Input
                             placeholder={word("cover")}
                             value={shield.cover.toString()}
-                            validate={validate}
+                            validate={validateNumber}
                             onUpdate={val => update("cover", val)}
                             disabled={state.sheet.locked}
                         />
@@ -91,7 +89,7 @@ export default function Shield ({ id }: props) {
                         <Input
                             placeholder={word("price")}
                             value={shield.price.toString()}
-                            validate={validate}
+                            validate={validateNumber}
                             onUpdate={val => update("price", val)}
                             disabled={state.sheet.locked}
                         />
@@ -99,7 +97,7 @@ export default function Shield ({ id }: props) {
                         <Input
                             placeholder={word("weight")}
                             value={shield.weight.toString()}
-                            validate={validate}
+                            validate={validateNumber}
                             onUpdate={val => update("weight", val)}
                             disabled={state.sheet.locked}
                         />
@@ -107,7 +105,7 @@ export default function Shield ({ id }: props) {
                         <Input
                             placeholder={word("min_strength")}
                             value={shield.minStrength.toString()}
-                            validate={validate}
+                            validate={validateNumber}
                             onUpdate={val => update("minStrength", val)}
                             disabled={state.sheet.locked}
                         />

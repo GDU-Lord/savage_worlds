@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { actions, RootState } from "../../../../store/reducers";
-import Input from "../../../Input";
+import Input, { validateNumber } from "../../../Input";
 import { Tool as ToolClass } from "../../../../store/slices/sheet/tools";
 import s from "./index.module.sass";
 import { bindActionCreators } from "@reduxjs/toolkit";
@@ -24,8 +24,6 @@ export default function Tool ({ id }: props) {
     });
 
     const t = state.tools.list.byId[id];
-
-    const validateWeight = (val: string) => !isNaN(+val);
 
     function update (field: "name" | "notes", val: string) {
         const tool = new ToolClass(t, true);
@@ -83,7 +81,7 @@ export default function Tool ({ id }: props) {
                     <Input
                         placeholder={word("weight")}
                         value={t.weight.toString()}
-                        validate={validateWeight}
+                        validate={validateNumber}
                         onUpdate={val => updateWeight(val)}
                         disabled={state.sheet.locked}
                     />

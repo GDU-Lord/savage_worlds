@@ -52,6 +52,7 @@ function word (str: keyof typeof words) {
 export default function Summary (props: props) {
 
     const state = useSelector((state: RootState) => state.sheet);
+    const summaryState = useSelector((state: RootState) => state.summary);
     
     const dispatch = useDispatch();
     const { updateDerivedStatistics } = bindActionCreators(actions, dispatch);
@@ -71,7 +72,7 @@ export default function Summary (props: props) {
     let torso = 0;
     let legs = 0;
 
-    const modifier = -state.other.fatigue-state.other.wounds;
+    const modifier = -state.other.fatigue-summaryState.wounds-state.other.wounds-(summaryState.distracted ? 2 : 0);
 
     for(const id of state.armor.list.allIds) {
         const armor = state.armor.list.byId[id];
@@ -124,13 +125,15 @@ export default function Summary (props: props) {
         // range
         const range = weapon.type === "range" ? `(${weapon.range})` : "";
 
-        const damage = getDamage(weapon, state.attributes.strength, modifier);
+        const damage = getDamage(weapon, state.attributes.strength, 0);
         
         return (<div className={s.text_field} key={index}>
             <i>{weapon.name} {range}</i><br/>
             <b>{damage}</b>
         </div>);
     });
+
+    const parry = state.derived.parry-(summaryState.voulnerable ? 2 : 0);
 
     return (
         <div className={s.component}>
@@ -142,7 +145,7 @@ export default function Summary (props: props) {
                         <i>{word("a_arms")}</i> <b>{state.derived.toughness+arms}({arms})</b><br/>
                         <i>{word("l_legs")}</i> <b>{state.derived.toughness+legs}({legs})</b><br/>
                     </div><br/>
-                    <div className={s.text_field}><i>{word("parry")}:</i> <b>{state.derived.parry}</b></div>
+                    <div className={s.text_field}><i>{word("parry")}:</i> <b>{parry}</b></div>
                     <div className={s.text_field}><i>{word("modifier")}:</i> <b>{modifier}</b></div>
                 </div><br/>
                 <div className={s.attributes}>
