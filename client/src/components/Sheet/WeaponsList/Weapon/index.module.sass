@@ -1,14 +1,25 @@
+@import '../../../../config'
+    
+.red
+    background-color: $c5
+.green
+    background-color: $c4
+    
 @media (max-width: 800px) 
     .weapon
         text-align: left
         width: 94vw
         margin: auto
         margin-top: 3vw
-        border-bottom: 0.5vw solid #000
+        border-bottom: 0.5vw solid $c4
+        .container4
+            div
+                width: 94vw
         .title
             font-size: 7vw
+            color: $ct
             // font-weight: 700
-            background-color: #5d81ab
+            background-color: $c2
             width: 92vw
             padding: 1vw
             // border-bottom: 0.5vw solid
@@ -16,12 +27,10 @@
             cursor: pointer
         input, textarea
             padding: 1vw
-            // border: 0.5vw solid #676767
             border: none
-            width: 59.6vw
-            height: 5vw
+            width: 72vw
+            min-height: 5.8vw
             font-size: 6vw
-            color: #6f4b22
             margin-bottom: 3vw
         .subtitle
             font-size: 6vw
@@ -29,28 +38,42 @@
             width: 11vw
             height: 8vw
             font-size: 6vw
-            // border: 0.5vw solid #797979
-            // border-radius: 1vw
             border: none
             display: inline-block
-            background-color: #8a8a8a
+            background-color: $c1
         div
             width: 83vw
             display: inline-block
         .select
-            background-color: #84c795
+            background-color: $c4
             transform: scale(1, 1.05)
         .container
-            input, textarea
-                width: 91vw
-                margin: 0
-        .container2
             display: block
+            width: 92vw
+            input, textarea
+                margin-bottom: 0vw
+            .big_block
+                input, textarea
+                    width: 92vw
+            .double_block
+                width: 92vw
+                display: flex
+                justify-content: space-between
+                gap: 4%
+                .small_block
+                    width: 48%
+                    flex-basis: 48%
+                    display: inline-block
+                    input
+                        width: 100%
+        .container2
+            display: flex
             width: 94vw
             margin-top: 3vw
+            justify-content: space-between
+            gap: 0px
             .button
-                // background-color: #5d81ab
-                width: 47vw
+                width: 100%
         .container3
             display: block
             width: 94vw
@@ -60,13 +83,19 @@
                 width: 34vw
                 height: 8vw
                 font-size: 6vw
-                // border: 0.5vw solid #797979
-                // border-radius: 1vw
                 border: none
-                background-color: #d98585
+                background-color: $c5
                 display: inline-block
             .button
                 width: 60vw
+        .amount
+            width: 94vw
+            background-color: red
+            button
+                width: 47vw
+                height: 8vw
+                font-size: 6vw
+                border: none
 
 
 @media (min-width: 800px) 

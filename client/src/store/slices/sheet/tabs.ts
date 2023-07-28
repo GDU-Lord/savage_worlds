@@ -13,6 +13,7 @@ export interface state {
     derived: boolean;
     edges: boolean;
     hindrances: boolean;
+    notes: boolean;
     tools: boolean;
     armor: boolean;
     shields: boolean;
@@ -29,6 +30,7 @@ const slice = createSlice({
         derived: true,
         edges: true,
         hindrances: true,
+        notes: true,
         tools: true,
         armor: true,
         shields: true,

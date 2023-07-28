@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { actions, RootState } from "../../../../store/reducers";
-import Input from "../../../Input";
+import Input, { validateNumber } from "../../../Input";
 import { Tool as ToolClass } from "../../../../store/slices/sheet/tools";
 import s from "./index.module.sass";
 import { bindActionCreators } from "@reduxjs/toolkit";
@@ -24,8 +24,6 @@ export default function Tool ({ id }: props) {
     });
 
     const t = state.tools.list.byId[id];
-
-    const validateWeight = (val: string) => !isNaN(+val);
 
     function update (field: "name" | "notes", val: string) {
         const tool = new ToolClass(t, true);
@@ -71,29 +69,31 @@ export default function Tool ({ id }: props) {
         <div className={s.tool}>
             <div onClick={updateHidden} className={s.title}>{name} {amountText}</div>
             {!t.hidden && <><div className={s.container}>
-                <div className={s.subtitle}>{word("title")}</div>
-                <Input
-                    placeholder={word("title")}
-                    value={t.name.toString()}
-                    onUpdate={val => update("name", val)}
-                    disabled={state.sheet.locked}
-                />
-                <div className={s.subtitle}>{word("description")}</div>
-                <Input
-                    big={true}
-                    placeholder={word("description")}
-                    value={t.notes.toString()}
-                    onUpdate={val => update("notes", val)}
-                    disabled={state.sheet.locked}
-                />
-                <div className={s.subtitle}>{word("weight")}</div>
-                <Input
-                    placeholder={word("weight")}
-                    value={t.weight.toString()}
-                    validate={validateWeight}
-                    onUpdate={val => updateWeight(val)}
-                    disabled={state.sheet.locked}
-                />
+                <div className={s.big_block}>
+                    <div className={s.subtitle}>{word("title")}</div>
+                    <Input
+                        placeholder={word("title")}
+                        value={t.name.toString()}
+                        onUpdate={val => update("name", val)}
+                        disabled={state.sheet.locked}
+                    />
+                    <div className={s.subtitle}>{word("weight")}</div>
+                    <Input
+                        placeholder={word("weight")}
+                        value={t.weight.toString()}
+                        validate={validateNumber}
+                        onUpdate={val => updateWeight(val)}
+                        disabled={state.sheet.locked}
+                    />
+                    <div className={s.subtitle}>{word("description")}</div>
+                    <Input
+                        big={true}
+                        placeholder={word("description")}
+                        value={t.notes.toString()}
+                        onUpdate={val => update("notes", val)}
+                        disabled={state.sheet.locked}
+                    />
+                </div>
             </div>
             <div className={s.subtitle}>{word("quantity")}</div>
             <Level type="toolAmount" name={id} always_active={true}/>

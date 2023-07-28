@@ -10,6 +10,8 @@ export interface props {
     onUpdate?: (value: string) => void;
 };
 
+export const validateNumber = (val: string) => val.search(/^(\-){0,1}[0-9][0-9]{0,}(\.[0-9][0-9]{0,}){0,1}((\+|\-|\/|\*|\^)[0-9][0-9]{0,}(\.[0-9][0-9]{0,}){0,1}){0,1}$/) > -1;
+
 
 export default function Input ({ disabled = false, big = false, placeholder = "", value = "", validate = () => true, onUpdate = () => {}}: props) {
 
@@ -43,7 +45,7 @@ export default function Input ({ disabled = false, big = false, placeholder = ""
         
         isFocused = false;
 
-        const regex = /^[1-9][0-9]{0,}(\*|\/|\+|\-|\^)[1-9][0-9]{0,}$/g;
+        const regex = /^(\-){0,1}[0-9][0-9]{0,}(\.[0-9][0-9]{0,}){0,1}(\*|\/|\+|\-|\^)[0-9][0-9]{0,}(\.[0-9][0-9]{0,}){0,1}$/g;
 
         let val = e.target.value;
 
@@ -52,8 +54,9 @@ export default function Input ({ disabled = false, big = false, placeholder = ""
                 const num = val.split("*").map(val => +val);
                 val = String(num[0] * num[1]);
             }
-            else if(val.includes("-")) {
-                const num = val.split("-").map(val => +val);
+            else if(val.search(/(?<!^)(\-)/) > -1) {
+                const num = val.split(/(?<!^)\-/).map(val => +val);
+                console.log(val.split(/(?<!^)\-/), num);
                 val = String(num[0] - num[1]);
             }
             else if(val.includes("+")) {

@@ -91,7 +91,7 @@ const slice = createSlice({
             for(const id of weapons.list.allIds) {
                 const item = weapons.list.byId[id];
                 if(item.worn)
-                    weight += item.weight;
+                    weight += item.weight * (item.type === "throwable" ? item.amount : 1);
             }
 
             for(const id of tools.list.allIds) {
@@ -150,7 +150,7 @@ const slice = createSlice({
             state.totalPoints = totalPoints;
             state.maxPoints = maxPoints;
             state.weight = weight;
-            state.maxWeight = (strength[0] + strength[1]) * other.weightAmplifier;
+            state.maxWeight = ((strength[0] - 2) * 2 + strength[1] * 4) * other.weightAmplifier;
         }
     }
 });

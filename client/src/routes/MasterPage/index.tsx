@@ -74,9 +74,9 @@ export default function MasterPage (props: props) {
             callback: async () => {
     
                 if(isMobile())
-                    window.open("/character?token=" + char.token);
+                    window.open("/summary?token=" + char.token);
                 else
-                    addWindow("/character?token=" + char.token);
+                    addWindow("/summary?token=" + char.token);
     
             }
         });

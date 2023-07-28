@@ -40,11 +40,13 @@ export default function WeaponList (props: props) {
                 type: "range",
                 range: "5/10/20",
                 rof: 1,
+                blast: "s",
                 ap: 0,
-                minStrength: 4,
+                minStrength: 6,
                 damage: "1d6",
                 notes: "",
-                worn: true
+                worn: true,
+                amount: 1
             })
         ]);
         saveData();

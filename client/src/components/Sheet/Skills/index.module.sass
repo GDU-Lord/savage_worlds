@@ -1,10 +1,12 @@
+@import '../../../config'
+    
 @media (max-width: 800px) 
     .skills
         padding-bottom: 1vw
         margin-top: 5vw
         .title
             font-size: 8vw
-            border-bottom: 0.5vw solid #000
+            border-bottom: 0.5vw solid $c4
             text-align: center
         .skill
             margin: 0 3vw
@@ -12,26 +14,27 @@
                 font-size: 6vw
                 line-height: 8vw
                 .attribute
-                    color: gray
+                    color: $c4
         .add
             margin-left: 1vw
             margin-bottom: 1vw
             width: 93vw
             height: 8vw
             font-size: 6vw
-            // border: 0.5vw solid #7b7b7b
-            background-color: #5cbb9b
-            // border-radius: 2vw
+            background-color: $c1
             border: none
-    .skills > div > input
-            margin: 10px 5px
-            padding: 1vw
-            // border: 0.5vw solid #676767
-            border: none
-            width: 90vw
-            height: 5vw
-            font-size: 6vw
-            color: #9d6d20
+        .custom_skill
+            margin: 0 1.5vw
+    .skills > div > input, .skills .custom_skill input
+        margin: 10px 5px
+        padding: 1vw
+        border: none
+        width: 90vw
+        height: 5vw
+        font-size: 6vw
+        color: $c1
+        background-color: $ct
+        
 
 @media (min-width: 800px) 
     .skills

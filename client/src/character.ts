@@ -6,6 +6,7 @@ import { state as armorState } from "./store/slices/sheet/armor";
 import { state as shieldsState } from "./store/slices/sheet/shields";
 import { state as edgesState } from "./store/slices/sheet/edges";
 import { state as hindrancesState } from "./store/slices/sheet/hindrances";
+import { state as notesState } from "./store/slices/sheet/hindrances";
 import { socket } from "./scripts";
 
 export type _level = [number, number];
@@ -23,26 +24,32 @@ export interface skills {
     notice: _level;
     persuasion: _level;
     stealth: _level;
+    athletics: _level;
     boating: _level;
     driving: _level;
     fighting: _level;
-    lockpicking: _level;
+    thievery: _level;
     piloting: _level;
     riding: _level;
     shooting: _level;
-    swimming: _level;
-    throwing: _level;
     gambling: _level;
     healing: _level;
-    investigation: _level;
+    research: _level;
     repair: _level;
-    streetwise: _level;
     survival: _level;
     taunt: _level;
-    tracking: _level;
-    guts: _level;
     intimidation: _level;
-    climbing: _level;
+    battle: _level;
+    hacking: _level;
+    electronics: _level;
+    weird_science: _level;
+    psionics: _level;
+    spellcasting: _level;
+    performance: _level;
+    faith: _level;
+    focus: _level;
+    academics: _level;
+    occult: _level;
 };
 
 export interface textStatistics {
@@ -66,17 +73,14 @@ export interface otherStatistics {
     bennies: number;
 };
 
-export interface edge {
+export interface note {
     id: string;
     name: string;
     notes: string;
 };
 
-export interface hindrance {
-    id: string;
-    name: string;
-    notes: string;
-};
+export interface edge extends note {};
+export interface hindrance extends note {};
 
 export interface tool {
     id: string;
@@ -120,11 +124,13 @@ export interface weapon {
     type: string;
     range: string;
     rof: number;
+    blast: "s" | "m" | "l" | "c";
     ap: number;
     minStrength: number;
     damage: string;
     notes: string;
     worn: boolean;
+    amount: number;
 };
 
 export interface character {
@@ -133,6 +139,7 @@ export interface character {
     skills: skills;
     otherStatistics: otherStatistics;
     textStatistics: textStatistics;
+    notes: note[];
     edges: edge[];
     hindrances: hindrance[];
     tools: tool[];
@@ -143,6 +150,8 @@ export interface character {
 
 export function updateCharacter (dispatch: any, state: RootState["sheet"], character: character) {
 
+    console.log(character);
+    
     const {
         initAttributes,
         initSkills,
@@ -153,6 +162,7 @@ export function updateCharacter (dispatch: any, state: RootState["sheet"], chara
         initShield,
         initEdges,
         initHindrances,
+        initNotes,
         initWeapons,
     } = bindActionCreators(actions, dispatch);
 
@@ -259,10 +269,24 @@ export function updateCharacter (dispatch: any, state: RootState["sheet"], chara
 
     initHindrances(hindrances);
 
+    const notes: notesState = {
+        list: {
+            byId: {},
+            allIds: character.notes.map(note => note.id)
+        }
+    };
+
+    for(const note of character.notes) {
+        notes.list.byId[note.id] = note as hindrancesState["list"]["byId"][0];
+        notes.list.byId[note.id].hidden = state.hindrances.list.byId[note.id]?.hidden ?? true;
+    }
+
+    initNotes(notes);
+
 }
 
 export function characterSave (state: RootState["sheet"]) {
-
+    
     const { attributes, other: otherStatistics, text: textStatistics, sheet: { savedData } } = state;
     const { token } = textStatistics;
 
@@ -278,6 +302,10 @@ export function characterSave (state: RootState["sheet"]) {
     const hindrances = state.hindrances.list.allIds.map(id => {
         return state.hindrances.list.byId[id];
     }) as hindrance[];
+
+    const notes = state.notes.list.allIds.map(id => {
+        return state.notes.list.byId[id];
+    }) as note[];
 
     const tools = state.tools.list.allIds.map(id => {
         return state.tools.list.byId[id];
@@ -303,12 +331,12 @@ export function characterSave (state: RootState["sheet"]) {
         textStatistics,
         edges,
         hindrances,
+        notes,
         tools,
         armor,
         shields,
         weapons,
     };
-
     
     const data = JSON.stringify(character);
 

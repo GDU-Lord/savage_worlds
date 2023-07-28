@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { actions, RootState } from "../../../../store/reducers";
-import Input from "../../../Input";
+import Input, { validateNumber } from "../../../Input";
 import { Shield as ShieldClass } from "../../../../store/slices/sheet/shields";
 import s from "./index.module.sass";
 import { bindActionCreators } from "@reduxjs/toolkit";
@@ -31,8 +31,6 @@ export default function Shield ({ id }: props) {
         saveData();
     }
 
-    const validate = (val: string) => !isNaN(+val);
-
     function update (field: "bonus" | "cover" | "price" | "weight" | "minStrength", val: string) {
         const shield = new ShieldClass(state.shields.list.byId[id], true);
         shield[field] = +val;
@@ -60,53 +58,59 @@ export default function Shield ({ id }: props) {
         <div className={s.armor}>
             <div onClick={updateHidden} className={s.title}>{shield.name.toString()} ({shield.bonus}) [{shield.cover}]</div>
             {!shield.hidden && <><div className={s.container}>
-                <div className={s.subtitle}>{word("title")}</div>
-                <Input
-                    placeholder={word("title")}
-                    value={shield.name.toString()}
-                    onUpdate={val => updateName(val)}
-                    disabled={state.sheet.locked}
-                />
-                <div className={s.subtitle}>{word("bonus")}</div>
-                <Input
-                    placeholder={word("bonus")}
-                    value={shield.bonus.toString()}
-                    validate={validate}
-                    onUpdate={val => update("bonus", val)}
-                    disabled={state.sheet.locked}
-                />
-                <div className={s.subtitle}>{word("cover")}</div>
-                <Input
-                    placeholder={word("cover")}
-                    value={shield.cover.toString()}
-                    validate={validate}
-                    onUpdate={val => update("cover", val)}
-                    disabled={state.sheet.locked}
-                />
-                <div className={s.subtitle}>{word("price")}</div>
-                <Input
-                    placeholder={word("price")}
-                    value={shield.price.toString()}
-                    validate={validate}
-                    onUpdate={val => update("price", val)}
-                    disabled={state.sheet.locked}
-                />
-                <div className={s.subtitle}>{word("weight")}</div>
-                <Input
-                    placeholder={word("weight")}
-                    value={shield.weight.toString()}
-                    validate={validate}
-                    onUpdate={val => update("weight", val)}
-                    disabled={state.sheet.locked}
-                />
-                <div className={s.subtitle}>{word("min_strength")}</div>
-                <Input
-                    placeholder={word("min_strength")}
-                    value={shield.minStrength.toString()}
-                    validate={validate}
-                    onUpdate={val => update("minStrength", val)}
-                    disabled={state.sheet.locked}
-                />
+                <div className={s.double_block}>
+                    <div className={s.small_block}>
+                        <div className={s.subtitle}>{word("title")}</div>
+                        <Input
+                            placeholder={word("title")}
+                            value={shield.name.toString()}
+                            onUpdate={val => updateName(val)}
+                            disabled={state.sheet.locked}
+                        />
+                        <div className={s.subtitle}>{word("bonus")}</div>
+                        <Input
+                            placeholder={word("bonus")}
+                            value={shield.bonus.toString()}
+                            validate={validateNumber}
+                            onUpdate={val => update("bonus", val)}
+                            disabled={state.sheet.locked}
+                        />
+                        <div className={s.subtitle}>{word("cover")}</div>
+                        <Input
+                            placeholder={word("cover")}
+                            value={shield.cover.toString()}
+                            validate={validateNumber}
+                            onUpdate={val => update("cover", val)}
+                            disabled={state.sheet.locked}
+                        />
+                    </div>
+                    <div className={s.small_block}>
+                        <div className={s.subtitle}>{word("price")}</div>
+                        <Input
+                            placeholder={word("price")}
+                            value={shield.price.toString()}
+                            validate={validateNumber}
+                            onUpdate={val => update("price", val)}
+                            disabled={state.sheet.locked}
+                        />
+                        <div className={s.subtitle}>{word("weight")}</div>
+                        <Input
+                            placeholder={word("weight")}
+                            value={shield.weight.toString()}
+                            validate={validateNumber}
+                            onUpdate={val => update("weight", val)}
+                            disabled={state.sheet.locked}
+                        />
+                        <div className={s.subtitle}>{word("min_strength")}</div>
+                        <Input
+                            placeholder={word("min_strength")}
+                            value={shield.minStrength.toString()}
+                            validate={validateNumber}
+                            onUpdate={val => update("minStrength", val)}
+                            disabled={state.sheet.locked}
+                        />
+                    </div>
+                </div>
             </div>
             <div className={s.container3}>
                 <button onClick={() => toggleWorn()} className={`${s.button} ${shield.worn ? s.select : ""}`} disabled={state.sheet.locked}>{word("worn")}</button>
