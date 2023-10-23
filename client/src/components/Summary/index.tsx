@@ -57,12 +57,21 @@ export default function Summary (props: props) {
     const dispatch = useDispatch();
     const { updateDerivedStatistics } = bindActionCreators(actions, dispatch);
 
-    console.log(state);
-
     useEffect(() => {
         // window.document.title
         updateDerivedStatistics(state);
     }, [state]);
+    
+    useEffect(() => {
+        let stateMarker = " ";
+        if(summaryState.distracted)
+            stateMarker += "❓";
+        if(summaryState.voulnerable)
+            stateMarker += "💔";
+        if(summaryState.shaken)
+            stateMarker += "💢";
+        document.head.querySelector("title")!.innerText = state.text.name.trim() === "" ? word("character") : state.text.name + stateMarker;
+    }, [summaryState]);
 
     document.head.querySelector("title")!.innerText = state.text.name.trim() === "" ? word("character") : state.text.name;
 
@@ -84,7 +93,7 @@ export default function Summary (props: props) {
 
     // skills
 
-    const skillList: (keyof skills)[][] = [["fighting", "shooting", "athletics"], ["intimidation", "taunt", "persuasion"], ["faith", "focus", "spellcasting", "occult", "psionics"]];
+    const skillList: (keyof skills)[][] = [["fighting", "shooting", "athletics"], ["intimidation", "taunt", "persuasion", "notice", "stealth"], ["faith", "focus", "spellcasting", "occult", "psionics"]];
 
     const parseSkills = (skillName: keyof skills, key: number) => {
         const skill = state.skills[skillName];

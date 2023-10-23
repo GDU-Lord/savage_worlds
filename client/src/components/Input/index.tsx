@@ -56,7 +56,6 @@ export default function Input ({ disabled = false, big = false, placeholder = ""
             }
             else if(val.search(/(?<!^)(\-)/) > -1) {
                 const num = val.split(/(?<!^)\-/).map(val => +val);
-                console.log(val.split(/(?<!^)\-/), num);
                 val = String(num[0] - num[1]);
             }
             else if(val.includes("+")) {

@@ -14,8 +14,8 @@ export interface props {
 
 export default function TextStats (props: props) {
 
-    const stats: (keyof textState)[] = ["playerName", "name", "race"];
-    const names: (keyof typeof words)[] = ["player_name", "name", "rase"];
+    const stats: (keyof textState)[] = ["name", "playerName", "race"];
+    const names: (keyof typeof words)[] = ["name", "player_name", "rase"];
 
     const state = useSelector((state: RootState) => state.sheet);
     const dispatch = useDispatch();

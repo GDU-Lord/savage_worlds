@@ -93,9 +93,12 @@ export default function Level ({ type, name, core = false, always_active = false
     }
 
     const locked = state.sheet.locked && !always_active;
+    const modNum = die === 0 ? mod-2 : mod;
+    const modStr = modNum === 0 ? "" : modNum > 0 ? "+"+modNum : modNum.toString();
 
     return (
         <div className={s.level}>
+            { (type === "other" || type === "toolAmount" || type === "weaponAmount" || !locked) && <>
             { type !== "other" && type !== "toolAmount" && type !== "weaponAmount" && <>
                 <button disabled={type === "attributes" || core || locked} onClick={() => setDie(0)} className={s.die+" "+(die === 0 ? s.select : null)}>0</button>
                 <button onClick={() => setDie(4)} className={s.die+" "+(die === 4 ? s.select : null)} disabled={locked}>4</button>
@@ -113,6 +116,10 @@ export default function Level ({ type, name, core = false, always_active = false
             />
             <button onClick={e => adjust(e, -1)} className={s.adjust+" "+s.minus} disabled={locked}>-</button>
             <button onClick={e => adjust(e, 1)} className={s.adjust+" "+s.plus} disabled={locked}>+</button>
+            </> }
+            { (type !== "other" && type !== "toolAmount" && type !== "weaponAmount" && locked) && <>
+                <div className={s.lockedDie}>d{die === 0 ? 4 : die}</div><div className={s.lockedMod}>{modStr}</div><div className={s.lockedDieImg + " " + s["d"+(die === 0 ? 4 : die)]}></div>
+            </>}
         </div>
     );
 

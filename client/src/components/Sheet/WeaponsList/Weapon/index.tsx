@@ -76,7 +76,11 @@ export default function Weapon ({ id }: props) {
     }
 
     function updateBlast (val: string) {
-        return (val.match(/(S|M|L|C)/)?.[0] ?? "S").toLowerCase();
+        const value = (val.match(/(S|M|L|C)/)?.[0] ?? "s").toLowerCase() as WeaponClass["blast"];
+        const weapon = new WeaponClass(w, true);
+        weapon.blast = value;
+        updateWeapon(weapon);
+        saveData();
     }
 
     function remove () {
