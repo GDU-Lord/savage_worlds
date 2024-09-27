@@ -1,4 +1,4 @@
-### Character Sheets for Savage Wordls Adventure Edition
+### Character Sheets for Savage Worlds Adventure Edition
 
 ## Deployment
 
